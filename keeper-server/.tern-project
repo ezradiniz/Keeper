@@ -1,0 +1,14 @@
+{
+  "plugins": {
+    "node": {},
+    "es_modules": {}
+  },
+  "libs": [
+    "body-parser",
+    "express",
+    "jsonwebtoken",
+    "mongoose",
+    "mongoose-unique-validator"
+  ],
+  "ecmaVersion": 6
+}
