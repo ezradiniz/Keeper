@@ -15,7 +15,6 @@
     "react-router-dom",
     "react-scripts",
     "redux",
-    "redux-devtools-extension",
     "redux-thunk"
   ],
   "ecmaVersion": 6
