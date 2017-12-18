@@ -1,0 +1,22 @@
+{
+  "plugins": {
+    "node": {},
+    "es_modules": {}
+  },
+  "libs": [
+    "axios",
+    "bootstrap",
+    "jwt-decode",
+    "prop-types",
+    "react",
+    "react-dom",
+    "react-redux",
+    "react-router",
+    "react-router-dom",
+    "react-scripts",
+    "redux",
+    "redux-devtools-extension",
+    "redux-thunk"
+  ],
+  "ecmaVersion": 6
+}

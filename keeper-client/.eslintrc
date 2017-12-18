@@ -1,0 +1,52 @@
+root: true
+
+parser: babel-eslint
+
+parserOptions:
+    ecmaVersion: 6
+    sourceType: module
+    jsx: true
+
+env:
+    browser: true
+    node: true
+    jest: true
+
+plugins:
+    - react
+
+extends:
+    - eslint-config-airbnb
+
+rules:
+    arrow-parens: ['error', 'as-needed', { requireForBlockBody: true }]
+    arrow-body-style: 0
+    class-methods-use-this: 0
+    indent: [error, 4, { SwitchCase: 1 }]
+    linebreak-style: 0
+    no-console: warn
+    no-debugger: error
+    no-multi-spaces: 0
+    no-nested-ternary: 0
+    no-underscore-dangle: 0
+    padded-blocks: 0
+    space-before-function-paren: [error, { named: always, anonymous: always }]
+    import/extensions: 0
+    import/no-named-as-default-member: 0
+    import/no-named-as-default: 0
+    import/prefer-default-export: 0
+    import/no-extraneous-dependencies: 0
+    import/no-unresolved: 0
+    react/jsx-filename-extension: 0
+    react/jsx-indent: [error, 4]
+    react/jsx-indent-props: [error, 4]
+    react/jsx-max-props-per-line: 0
+    react/prop-types: 0
+    react/forbid-prop-types: [2, { "forbid": ["any"]}]
+    react/require-default-props: 0
+    react/no-array-index-key: 1
+
+globals:
+    Promise: true
+    describe: true
+    it: true
