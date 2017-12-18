@@ -17,6 +17,6 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired
-}
+};
 
 export default App;
