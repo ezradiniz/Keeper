@@ -4,12 +4,16 @@ import mongoose from 'mongoose';
 
 import env from './env';
 
+import users from './route/users';
+
 const app = express();
 
 app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
 mongoose.connect(env.MONGODB_URL, { useMongoClient: true });
+
+app.use('/api/users', users);
 
 app.listen(8080, () => {
   console.log(`Running on ${env.HOST}`);
