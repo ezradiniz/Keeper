@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.submit(this.data);
+    this.props.submit(this.state.data);
   };
 
   onChange = e => {

@@ -11,14 +11,14 @@ class LoginPage extends React.Component {
     this.history.push('/dashboard');
   });
 
-    render() {
-      return (
-        <div className='container'>
+  render() {
+    return (
+      <div className='container'>
         <h2>Login</h2>
         <LoginForm submit={this.handleSubmit} />
-        </div>
-      );
-    }
+      </div>
+    );
+  }
 }
 
 LoginPage.propTypes = {

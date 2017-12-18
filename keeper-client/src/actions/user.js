@@ -1,13 +1,8 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../constantes/types';
+import { USER_LOGGED_IN } from '../constantes/types';
 import api from '../api';
 
 const userLoggedIn = data => ({
   type: USER_LOGGED_IN,
-  data
-});
-
-const userLoggedOut = data => ({
-  type: USER_LOGGED_OUT,
   data
 });
 
