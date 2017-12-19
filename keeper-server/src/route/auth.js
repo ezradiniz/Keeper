@@ -1,5 +1,6 @@
 import express from 'express';
 import User from '../model/User';
+import userAuthenticate from '../middlewares/userAuthenticate';
 
 const router = express.Router();
 
@@ -15,6 +16,10 @@ router.post('/', (req, res) => {
       }
     })
     .catch(err => res.status(400).json({ error: err }));
+});
+
+router.get('/', userAuthenticate, (req, res) => {
+  res.json({user: req.userAuth.toJson()});
 });
 
 export default router;

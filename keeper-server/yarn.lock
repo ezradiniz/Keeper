@@ -1414,6 +1414,26 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+express-async@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/express-async/-/express-async-0.1.3.tgz#3e65f3ee7d4009c6a6c70a72807f94e17b403b4e"
+  dependencies:
+    lodash "^2.4.1"
+
+express-authentication@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/express-authentication/-/express-authentication-0.3.2.tgz#b824f4b558510a59bfe324cda7c4f69e19e4756d"
+  dependencies:
+    express-context "^0.7.1"
+    lodash "^3.6.0"
+
+express-context@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/express-context/-/express-context-0.7.1.tgz#29fb966ad7d054d4bb5d8530abca867c9296f4db"
+  dependencies:
+    express-async "^0.1.3"
+    lodash "^3.6.0"
+
 express@^4.15.4:
   version "4.16.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
@@ -2338,6 +2358,14 @@ lodash.once@^4.0.0:
 lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
+
+lodash@^2.4.1:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
+
+lodash@^3.6.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
 lodash@^4.14.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
