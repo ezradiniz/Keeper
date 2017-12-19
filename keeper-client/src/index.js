@@ -8,7 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import App from './App';
 import reducers from './reducers';
-import { loginBeforeRender } from './actions';
+import { fetchCurrentUser } from './actions';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(
@@ -16,7 +16,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-loginBeforeRender(store);
+fetchCurrentUser(store);
 
 ReactDOM.render(
   <BrowserRouter>

@@ -1,14 +1,9 @@
-import decode from 'jwt-decode';
-import { userLoggedIn } from './user';
+import { fetchCurrent } from './user';
+import setAuthToken from '../api/setAuthToken';
 
-export const loginBeforeRender = (store) => {
+export const fetchCurrentUser = store => {
   if (localStorage.keeperJWT) {
-    const payload = decode(localStorage.keeperJWT);
-    const user = {
-      token: localStorage.keeperJWT,
-      email: payload.email,
-      nickname: payload.nickname
-    };
-    store.dispatch(userLoggedIn(user));
+    setAuthToken(localStorage.keeperJWT);
+    store.dispatch(fetchCurrent());
   }
 };
