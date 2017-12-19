@@ -8,7 +8,7 @@ import LoginForm from '../forms/LoginForm';
 class LoginPage extends React.Component {
 
   handleSubmit = data => this.props.login(data).then(() => {
-    this.history.push('/dashboard');
+    this.props.history.push('/dashboard');
   });
 
   render() {
