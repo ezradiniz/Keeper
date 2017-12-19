@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt';
 
 import env from '../env';
 
+const generateToken = data => jwt.sign(data, env.JWT_SECRET);
+
 const User = new mongoose.Schema(
   {
     nickname: { type: String, required: true },
@@ -20,14 +22,16 @@ User.pre('save', function (next) {
   next();
 });
 
-const generateToken = data => jwt.sign(data, env.JWT_SECRET);
-
 User.methods.toJson = function toJson() {
   return {
     nickname: this.nickname,
     email: this.email,
     token: generateToken({ nickname: this.nickname, email: this.email })
   };
+};
+
+User.methods.isValidPassword = function isValidPassword(password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
 User.plugin(uniqueValidator, {
