@@ -41,10 +41,11 @@ class NoteForm extends React.Component {
         </div>
         <div className='form-group'>
           <label htmlFor='body'>Body</label>
-          <input
+          <textarea
             type='body'
             id='body'
             name='body'
+            rows='7'
             value={data.body}
             onChange={this.onChange}
             className='form-control'

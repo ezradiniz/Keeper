@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NoteForm from '../forms/NoteForm';
+import NotesList from '../lists/NotesList';
 import { connect } from 'react-redux';
 import { create, fetchAll } from '../../actions/note';
 
@@ -19,6 +20,8 @@ class DashboardPage extends React.Component {
   });
 
   render() {
+    const { notes } = this.state;
+
     return (
       <div className='container'>
         <h2>Dashboard</h2>
@@ -26,6 +29,8 @@ class DashboardPage extends React.Component {
           <h3>New Note</h3>
           <NoteForm submit={this.handleSubmit} />
         </div>
+        <hr/>
+        <NotesList notes={notes} />
       </div>
     );
   }
