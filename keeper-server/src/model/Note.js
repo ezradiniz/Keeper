@@ -4,7 +4,7 @@ const Note = new mongoose.Schema(
   {
     subject: { type: String, required: true },
     body: { type: String, required: true },
-    shared: { type: Boolean, default: false },
+    isPrivate: { type: Boolean, default: true },
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' }
   },
   { timestamps: true }

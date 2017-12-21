@@ -12,6 +12,6 @@ app.use(bodyParser.json());
 
 routes(app);
 
-app.listen(8080, () => {
+app.listen(env.PORT, () => {
   console.log(`Running on ${env.HOST}`);
 });
