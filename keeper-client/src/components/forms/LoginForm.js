@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader';
 
 class LoginForm extends React.Component {
 
@@ -7,12 +8,14 @@ class LoginForm extends React.Component {
     data: {
       email: '',
       password: ''
-    }
+    },
+    loaded: true
   };
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.submit(this.state.data);
+    this.setState({ loaded: false });
+    this.props.submit(this.state.data).catch(() => this.setState({ loaded: true }));
   };
 
   onChange = e => {
@@ -22,9 +25,10 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, loaded } = this.state;
 
     return (
+      <Loader loaded={loaded}>
       <form onSubmit={this.onSubmit}>
         <div className='form-group'>
           <label htmlFor='email'>Email</label>
@@ -50,6 +54,7 @@ class LoginForm extends React.Component {
         </div>
         <button type='submit' className='btn btn-primary btn-block'>Login</button>
       </form>
+    </Loader>
     );
   }
 }

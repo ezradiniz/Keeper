@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const rotates = [
@@ -12,6 +13,7 @@ const renderNotes = notes => notes.map((note, key) => (
       <small>{note.updatedAt}</small>
       <h4>{note.subject}</h4>
       <p>{note.body}</p>
+      {!note.isPrivate && <Link to={`/notes/public/${note._id}`}>Shared</Link>}
     </div>
   </li>
 ));

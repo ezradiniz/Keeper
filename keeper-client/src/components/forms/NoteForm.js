@@ -6,7 +6,8 @@ class NoteForm extends React.Component {
   state = {
     data: {
       subject: '',
-      body: ''
+      body: '',
+      isPrivate: 'true'
     }
   };
 
@@ -31,7 +32,7 @@ class NoteForm extends React.Component {
         <div className='form-group'>
           <label htmlFor='subject'>Subject</label>
           <input
-            type='subject'
+            type='text'
             id='subject'
             name='subject'
             value={data.subject}
@@ -42,7 +43,7 @@ class NoteForm extends React.Component {
         <div className='form-group'>
           <label htmlFor='body'>Body</label>
           <textarea
-            type='body'
+            type='text'
             id='body'
             name='body'
             rows='7'
@@ -50,6 +51,19 @@ class NoteForm extends React.Component {
             onChange={this.onChange}
             className='form-control'
           />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='visibility'>Is private ?</label>
+          <div className='form-check'>
+            <label className='toggle'>
+              <input type='radio' name='isPrivate' value='true' onChange={this.onChange} checked={data.isPrivate === 'true'}/>
+              <span className='label-text'>yes </span>
+            </label>
+            <label className='toggle'>
+              <input type='radio' name='isPrivate' value='false' onChange={this.onChange} checked={data.isPrivate === 'false'}/>
+              <span className='label-text'>no</span>
+            </label>
+          </div>
         </div>
         <button type='submit' className='btn btn-primary btn-block'>Add</button>
       </form>
