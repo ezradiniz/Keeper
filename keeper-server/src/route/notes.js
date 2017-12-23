@@ -12,12 +12,28 @@ router.post('/', userAuthenticate, (req, res) => {
 });
 
 router.get('/', userAuthenticate, (req, res) => {
-  Note.find({ user: req.userAuth._id })
+  let filter = {};
+  if (req.query.archive) {
+    filter.isArchived = req.query.archive === 'true';
+  }
+  Note.find({ user: req.userAuth._id, ...filter })
     .sort({ createdAt: -1})
     .then(notes => res.json({ notes }));
 });
 
-router.get('/public/:id', (req, res) => {
+router.get('/:id', userAuthenticate, (req, res) => {
+  Note.findOne({ _id: req.params.id, user: req.userAuth._id })
+    .then(note => res.json({ note }))
+    .catch(err => res.status(400).json({ error: err }))
+});
+
+router.delete('/:id', userAuthenticate, (req, res) => {
+  Note.findOneAndRemove({ _id: req.params.id, user: req.userAuth._id })
+    .then(note => res.json({ note }))
+    .catch(err => res.status(400).json({ error: err }))
+});
+
+router.get('/:id/public', (req, res) => {
   Note.findOne({ _id: req.params.id, isPrivate: false })
     .populate('user')
     .then(note => res.json({
@@ -28,6 +44,12 @@ router.get('/public/:id', (req, res) => {
         nickname: note.user.nickname
       }
     }))
+    .catch(err => res.status(400).json({ error: err }));
+});
+
+router.patch('/:id/archives', userAuthenticate, (req, res) => {
+  Note.findOneAndUpdate({ _id: req.params.id, user: req.userAuth._id }, { $set: { isArchived: true } }, { new: true })
+    .then(note => res.json({ note }))
     .catch(err => res.status(400).json({ error: err }));
 });
 
