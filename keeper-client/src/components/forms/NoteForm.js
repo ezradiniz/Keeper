@@ -13,9 +13,7 @@ class NoteForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.submit(this.state.data).then(() => this.setState({
-      data: { subject: '', body: '' }
-    }));
+    this.props.submit(this.state.data);
   };
 
   onChange = e => {
@@ -57,22 +55,23 @@ class NoteForm extends React.Component {
           <div className='form-check'>
             <label className='toggle'>
               <input type='radio' name='isPrivate' value='true' onChange={this.onChange} checked={data.isPrivate === 'true'}/>
-              <span className='label-text'>yes </span>
+              <span className='label-text'> yes </span>
             </label>
+            <span> </span>
             <label className='toggle'>
               <input type='radio' name='isPrivate' value='false' onChange={this.onChange} checked={data.isPrivate === 'false'}/>
-              <span className='label-text'>no</span>
+              <span className='label-text'> no</span>
             </label>
           </div>
         </div>
-        <button type='submit' className='btn btn-primary btn-block'>Add</button>
+        <button type='submit' className='btn btn-info btn-lg'>Add</button>
       </form>
     );
   }
 }
 
 NoteForm.propTypes = {
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
 };
 
 export default NoteForm;

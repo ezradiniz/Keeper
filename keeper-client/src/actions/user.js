@@ -18,7 +18,7 @@ export const userLoggedOut = () => ({
 
 export const fetchCurrent = () => dispatch => {
   return api.user.fetchCurrent().then(user => {
-    dispatch(userFetched({ ...user, loaded: true }));
+    dispatch(userFetched(user));
     return user;
   });
 };

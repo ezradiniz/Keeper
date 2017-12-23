@@ -52,7 +52,7 @@ class LoginForm extends React.Component {
             className='form-control'
           />
         </div>
-        <button type='submit' className='btn btn-primary btn-block'>Login</button>
+        <button type='submit' className='btn btn-info btn-lg'>Login</button>
       </form>
     </Loader>
     );

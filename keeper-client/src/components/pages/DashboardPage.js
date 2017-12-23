@@ -1,39 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Loader from 'react-loader';
-import NoteForm from '../forms/NoteForm';
 import NotesList from '../lists/NotesList';
 import { connect } from 'react-redux';
-import { create, fetchAll } from '../../actions/note';
+import { archive, remove, fetchAll } from '../../actions/note';
+import { allNotesSelector } from '../../reducers/note';
 
 class DashboardPage extends React.Component {
 
   state = {
-    notes: [],
     loaded: false
   };
 
   componentDidMount() {
-    this.props.fetchAll().then(notes => this.setState({ notes: [ ...notes ], loaded: true }));
+    this.props.fetchAll().then(() => this.setState({ loaded: true }));
   }
 
-  handleSubmit = data => this.props.create(data).then(note => {
-    this.setState({ notes: [ note, ...this.state.notes] });
-  });
+  handleArchive = note => this.props.archive(note);
+
+  handleRemove = note => this.props.remove(note);
 
   render() {
-    const { notes, loaded } = this.state;
+    const { notes } = this.props;
 
     return (
       <div className='container'>
-        <h2>Dashboard</h2>
-        <div>
-          <h3>New Note</h3>
-          <NoteForm submit={this.handleSubmit} />
+        <div className='text-center'>
+          <Link to='/notes/new' className='btn btn-info btn-lg'><span className='glyphicon glyphicon-plus'> Note</span></Link>
         </div>
         <hr/>
-        <Loader loaded={loaded}>
-          <NotesList notes={notes} />
+        <Loader loaded={this.state.loaded}>
+          <NotesList notes={notes} archive={this.handleArchive} remove={this.handleRemove} />
         </Loader>
       </div>
     );
@@ -42,7 +40,16 @@ class DashboardPage extends React.Component {
 
 DashboardPage.propTypes = {
   fetchAll: PropTypes.func.isRequired,
-  create: PropTypes.func.isRequired
+  archive: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+  notes: PropTypes.array.isRequired
 };
 
-export default connect(null, { fetchAll, create })(DashboardPage);
+
+function mapStateToProps(state) {
+  return {
+    notes: allNotesSelector(state)
+  };
+}
+
+export default connect(mapStateToProps, { fetchAll, archive, remove })(DashboardPage);

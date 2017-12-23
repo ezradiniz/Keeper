@@ -12,6 +12,7 @@ const Navbar = ({ nickname, logout, location }) => (
       </div>
       <ul className='nav navbar-nav'>
         <li className={location.pathname === '/dashboard' ? 'active' : ' '}><Link to='/dashboard'>Dashboard</Link></li>
+        <li className={location.pathname === '/archive' ? 'active' : ' '}><Link to='/archive'>Archive</Link></li>
       </ul>
       <ul className='nav navbar-nav navbar-right'>
         <li><Link to='#' onClick={() => logout()}><span className='glyphicon glyphicon-log-in'/> Logout</Link></li>

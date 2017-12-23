@@ -1,17 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const HomePage = () => (
+const HomePage = ({ isAuthenticate }) => (
   <div className='container'>
     <div className='jumbotron'>
       <h1>Keeper</h1>
       <p>Notes and Snippets</p>
       <ul className='nav navbar-nav'>
-        <li><Link to='/login'>Login</Link></li>
-        <li><Link to='/signup'>Sign Up</Link></li>
+        {!isAuthenticate && <div>
+          <li><Link to='/login'>Login</Link></li>
+          <li><Link to='/signup'>Sign Up</Link></li>
+        </div>}
       </ul>
     </div>
   </div>
 );
 
-export default HomePage;
+HomePage.propTypes = {
+  isAuthenticate: PropTypes.bool.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticate: !!state.user.token
+  }
+}
+
+export default connect(mapStateToProps)(HomePage);

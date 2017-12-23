@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import api from '../../api';
 import Loader from 'react-loader';
-import { connect } from 'react-redux';
-import { fetchPublic } from '../../actions/note';
+import { formatText } from '../../util/noteText';
 
 class PublicNote extends React.Component {
 
@@ -11,8 +11,7 @@ class PublicNote extends React.Component {
   };
 
   componentDidMount() {
-    this.props
-      .fetchPublic(this.props.match.params.note)
+    api.note.fetchPublic(this.props.match.params.note)
       .then(note => this.setState({ note, loaded: true }))
       .catch(() => this.setState({ loaded: true }));
   }
@@ -22,19 +21,17 @@ class PublicNote extends React.Component {
 
     return (
       <Loader loaded={loaded}>
-        <div>
-          <div className='container bootstrap snippet'>
-            {note && <div className='row'>
-              <ul className='notes'>
-                <li>
-                  <h5>Nickname: {note.nickname}</h5>
-                  <div className='lazur-bg'>
-                    <small>{note.updatedAt}</small>
-                    <h4>{note.subject}</h4>
-                    <p>{note.body}</p>
+        <div className='row'>
+          <div className='col-xs-4 col-xs-offset-4'>
+            {note && <div className='contaienr text-center'>
+              <div className='note-col'>
+                <div className='note-content'>
+                  <div className='intro-content'>
+                    <h5>{formatText(note.subject, 20)}</h5>
+                    <p className='text-left'>{formatText(note.body)}</p>
                   </div>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>}
             {!note && <div className='alert alert-danger'>
               <p className='text-center'>Note not found</p>
@@ -47,7 +44,6 @@ class PublicNote extends React.Component {
 }
 
 PublicNote.propTypes = {
-  fetchPublic: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       note: PropTypes.string.isRequired
@@ -55,4 +51,4 @@ PublicNote.propTypes = {
   }).isRequired
 };
 
-export default connect(null, { fetchPublic })(PublicNote);
+export default PublicNote;
