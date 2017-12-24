@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NotesList from '../lists/NotesList';
+import NoteSection from '../sections/NoteSection';
 import Loader from 'react-loader';
 import { fetchAllArchive, remove } from '../../actions/note';
 import { allNotesSelector } from '../../reducers/note';
@@ -24,7 +24,23 @@ class ArchivePage extends React.Component {
     return (
       <div className='container'>
         <Loader loaded={this.state.loaded}>
-          <NotesList notes={notes} remove={this.handleRemove} />
+          {notes.length > 0 &&
+            <div>
+              <h3 className='text-center'>You have {notes.length} archived notes</h3>
+              <NoteSection
+                notes={notes}
+                remove
+                update
+                share
+                unarchive
+              />
+            </div>
+          }
+          {notes.length <= 0 &&
+              <div className='alert alert-danger'>
+                <p className='text-center'>0 archived Notes</p>
+              </div>
+          }
         </Loader>
       </div>
     );

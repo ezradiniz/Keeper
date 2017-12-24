@@ -11,8 +11,10 @@ class NewNotePage extends React.Component {
   render() {
     return (
       <div className='container'>
-        <h2>New Note</h2>
-        <NoteForm submit={this.handleSubmit} />
+        <div className='col-md-4 col-md-offset-4'>
+          <h3>New Note</h3>
+          <NoteForm submit={this.handleSubmit} />
+        </div>
       </div>
     );
   }

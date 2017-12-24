@@ -1,11 +1,13 @@
 import api from '../api';
 import {
-  NOTE_CREATED,
-  NOTE_REMOVED,
   NOTES_ARCHIVED_FETCHED,
-  NOTE_ARCHIVED,
   NOTES_FETCHED,
-  NOTE_PUBLIC_FETCHED
+  NOTE_ARCHIVED,
+  NOTE_CREATED,
+  NOTE_PUBLIC_FETCHED,
+  NOTE_REMOVED,
+  NOTE_UNARCHIVED,
+  NOTE_UPDATED
 } from '../constantes/types';
 
 const notesFetched = data => ({
@@ -23,8 +25,18 @@ const noteRemoved = data => ({
   data
 });
 
+const noteUpdated = data => ({
+  type: NOTE_UPDATED,
+  data
+});
+
 const noteArchived = data => ({
   type: NOTE_ARCHIVED,
+  data
+});
+
+const noteUnarchived = data => ({
+  type: NOTE_UNARCHIVED,
   data
 });
 
@@ -48,9 +60,19 @@ export const remove = note => dispatch =>
     dispatch(noteRemoved(data));
   });
 
+export const update = note => dispatch =>
+  api.note.update(note).then(data => {
+    dispatch(noteUpdated(data));
+  });
+
 export const archive = note => dispatch =>
-  api.note.archive(note).then((data) => {
+  api.note.update(note).then((data) => {
     dispatch(noteArchived(data));
+  });
+
+export const unarchive = note => dispatch =>
+  api.note.update(note).then((data) => {
+    dispatch(noteUnarchived(data));
   });
 
 export const fetchAllArchive = () => dispatch =>

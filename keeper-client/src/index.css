@@ -1,11 +1,10 @@
-.icon {
-  margin-right: -11px;
-  float: right;
-  color: #484848;
+.note {
+  word-wrap: break-word;
 }
 
 .note-col {
   background-color: #23c6c8;
+  word-wrap: break-word;
   margin: 10px 5px 30px 20px;
   box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
   padding-top: 1px;
@@ -14,10 +13,24 @@
 
 .intro-content h5 {
   font-weight: bold;
+  text-align: center;
 }
 
 .note-content {
-  word-wrap: break-word;
   max-height: 130px;
   height: 130px;
+  cursor: pointer;
+}
+
+.tool a {
+  padding: 10px;
+}
+
+.note-preview {
+  background-color: #23c6c8;
+  display: block;
+}
+
+.quit {
+  float: right;
 }

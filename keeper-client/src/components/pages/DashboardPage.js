@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Loader from 'react-loader';
-import NotesList from '../lists/NotesList';
+import NoteSection from '../sections/NoteSection';
 import { connect } from 'react-redux';
-import { archive, remove, fetchAll } from '../../actions/note';
+import { fetchAll } from '../../actions/note';
 import { allNotesSelector } from '../../reducers/note';
 
 class DashboardPage extends React.Component {
@@ -17,10 +17,6 @@ class DashboardPage extends React.Component {
     this.props.fetchAll().then(() => this.setState({ loaded: true }));
   }
 
-  handleArchive = note => this.props.archive(note);
-
-  handleRemove = note => this.props.remove(note);
-
   render() {
     const { notes } = this.props;
 
@@ -31,7 +27,13 @@ class DashboardPage extends React.Component {
         </div>
         <hr/>
         <Loader loaded={this.state.loaded}>
-          <NotesList notes={notes} archive={this.handleArchive} remove={this.handleRemove} />
+          <NoteSection
+            notes={notes}
+            share
+            remove
+            archive
+            update
+          />
         </Loader>
       </div>
     );
@@ -40,8 +42,6 @@ class DashboardPage extends React.Component {
 
 DashboardPage.propTypes = {
   fetchAll: PropTypes.func.isRequired,
-  archive: PropTypes.func.isRequired,
-  remove: PropTypes.func.isRequired,
   notes: PropTypes.array.isRequired
 };
 
@@ -52,4 +52,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchAll, archive, remove })(DashboardPage);
+export default connect(mapStateToProps, { fetchAll })(DashboardPage);

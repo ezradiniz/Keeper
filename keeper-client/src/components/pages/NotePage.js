@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
 import { connect } from 'react-redux';
-import NoteForm from '../forms/NoteForm';
+import NoteUpdateForm from '../forms/NoteUpdateForm';
+import { update } from '../../actions/note';
 import api from '../../api';
 
 class NotePage extends React.Component {
 
   state = {
     loaded: false,
-    note: {}
   };
 
   handleSubmit = data => this.props.update(data).then(() => this.props.history.push('/dashboard'));
@@ -26,10 +26,21 @@ class NotePage extends React.Component {
 
     return (
       <div className='container'>
-        <h2>Note</h2>
-        <Loader loaded={loaded}>
-          <NoteForm data={note} submit={this.handleSubmit} />
-        </Loader>
+        <div className='col-md-4 col-md-offset-4'>
+          {note &&
+              <div>
+                <h3>Note</h3>
+                <Loader loaded={loaded}>
+                  <NoteUpdateForm data={note} submit={this.handleSubmit} />
+                </Loader>
+              </div>
+          }
+          {!note &&
+              <div className='alert alert-danger'>
+                <p className='text-center'>Note not found</p>
+              </div>
+          }
+        </div>
       </div>
     );
   }
@@ -42,4 +53,4 @@ NotePage.propTypes = {
   }).isRequired
 };
 
-export default connect(null, { update: () => console.log('teste') })(NotePage);
+export default connect(null, { update })(NotePage);

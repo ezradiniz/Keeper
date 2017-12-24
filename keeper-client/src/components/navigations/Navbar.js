@@ -8,17 +8,15 @@ const Navbar = ({ nickname, logout, location }) => (
   <div className='navbar navbar-default'>
     <div className='container-fluid'>
       <div className='navbar-header'>
-        <Link to='/' className='navbar-brand'>Keeper</Link>
+        <Link to='/' className='navbar-brand' >Keeper</Link>
       </div>
       <ul className='nav navbar-nav'>
         <li className={location.pathname === '/dashboard' ? 'active' : ' '}><Link to='/dashboard'>Dashboard</Link></li>
         <li className={location.pathname === '/archive' ? 'active' : ' '}><Link to='/archive'>Archive</Link></li>
       </ul>
       <ul className='nav navbar-nav navbar-right'>
+        <li><a><span className='glyphicon glyphicon-user'/> {nickname}</a></li>
         <li><Link to='#' onClick={() => logout()}><span className='glyphicon glyphicon-log-in'/> Logout</Link></li>
-      </ul>
-      <ul className='nav navbar-nav navbar-right'>
-        <li><Link to='#'><span className='glyphicon glyphicon-user'/> {nickname}</Link></li>
       </ul>
     </div>
   </div>

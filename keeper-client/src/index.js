@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -15,6 +16,8 @@ const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+Modal.setAppElement('#root');
 
 ReactDOM.render(
   <BrowserRouter>
