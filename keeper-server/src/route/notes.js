@@ -21,6 +21,12 @@ router.get('/', userAuthenticate, (req, res) => {
     .then(notes => res.json({ notes }));
 });
 
+router.put('/:id', userAuthenticate, (req, res) => {
+  Note.findOneAndUpdate({ _id: req.params.id, user: req.userAuth._id }, { $set: {  ...req.body.note } }, { new: true })
+    .then(note => res.json({ note }))
+    .catch(err => res.status(400).json({ error: err }));
+});
+
 router.get('/:id', userAuthenticate, (req, res) => {
   Note.findOne({ _id: req.params.id, user: req.userAuth._id })
     .then(note => res.json({ note }))
@@ -44,12 +50,6 @@ router.get('/:id/public', (req, res) => {
         nickname: note.user.nickname
       }
     }))
-    .catch(err => res.status(400).json({ error: err }));
-});
-
-router.patch('/:id/archives', userAuthenticate, (req, res) => {
-  Note.findOneAndUpdate({ _id: req.params.id, user: req.userAuth._id }, { $set: { isArchived: true } }, { new: true })
-    .then(note => res.json({ note }))
     .catch(err => res.status(400).json({ error: err }));
 });
 
