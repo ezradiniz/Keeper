@@ -1,5 +1,19 @@
 import React from 'react';
+import {
+  Button,
+  Col,
+  ControlLabel,
+  Form,
+  FormControl,
+  FormGroup,
+  Radio,
+} from 'react-bootstrap';
+import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import PropTypes from 'prop-types';
+import NoteEditor from '../editor/NoteEditor';
+import RichardTextEditor from 'react-rte';
+
+bootstrapUtils.addStyle(Button, 'note');
 
 class NoteForm extends React.Component {
 
@@ -11,9 +25,21 @@ class NoteForm extends React.Component {
     }
   };
 
+  componentWillMount() {
+    if (this.props.data) {
+      this.setState({
+        data: {
+          ...this.props.data,
+          isPrivate: this.props.data.isPrivate.toString(),
+          body: RichardTextEditor.createValueFromString(this.props.data.body, 'html')
+        }
+      });
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
-    this.props.submit(this.state.data);
+    this.props.submit({ ...this.state.data, body: this.state.data.body.toString('html') });
   };
 
   onChange = e => {
@@ -26,52 +52,69 @@ class NoteForm extends React.Component {
     const { data } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='subject'>Subject</label>
-          <input
-            type='text'
-            id='subject'
-            name='subject'
-            value={data.subject}
-            onChange={this.onChange}
-            className='form-control'
-          />
+      <Form horizontal onSubmit={this.onSubmit}>
+        <FormGroup controlId='formSubject'>
+          <Col md={12}>
+            <FormControl
+              type='text'
+              name='subject'
+              placeholder='Title'
+              defaultValue={data.subject}
+              onChange={this.onChange}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup controlId='formBody'>
+          <Col md={12}>
+            <NoteEditor
+              value={data.body}
+              placeholder='Message'
+              onChange={(value) => this.setState({ data: { ...this.state.data, body: value } })}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup controlId='formPrivate'>
+          <Col componentClass={ControlLabel} md={2}>
+            Visibility:
+          </Col>
+          <Col md={4}>
+            <Radio
+              name='isPrivate'
+              onChange={this.onChange}
+              value='true'
+              checked={data.isPrivate === 'true'}
+              inline
+            >
+              Private
+            </Radio>
+            <Radio
+              name='isPrivate'
+              onChange={this.onChange}
+              value='false'
+              checked={data.isPrivate === 'false'}
+              inline
+            >
+              Public
+            </Radio>
+          </Col>
+        </FormGroup>
+        <div className='text-center'>
+          <Button bsStyle='note' type='submit' bsSize='large'>
+            {this.props.btnText}
+          </Button>
         </div>
-        <div className='form-group'>
-          <label htmlFor='body'>Body</label>
-          <textarea
-            type='text'
-            id='body'
-            name='body'
-            rows='7'
-            value={data.body}
-            onChange={this.onChange}
-            className='form-control'
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='visibility'>Is private ?</label>
-          <div className='form-check'>
-            <label className='toggle'>
-              <input type='radio' name='isPrivate' value='true' onChange={this.onChange} checked={data.isPrivate === 'true'}/>
-              <span className='label-text'> yes </span>
-            </label>
-            <span> </span>
-            <label className='toggle'>
-              <input type='radio' name='isPrivate' value='false' onChange={this.onChange} checked={data.isPrivate === 'false'}/>
-              <span className='label-text'> no</span>
-            </label>
-          </div>
-        </div>
-        <button type='submit' className='btn btn-info btn-lg'>Add</button>
-      </form>
+      </Form>
     );
   }
 }
 
 NoteForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  btnText: PropTypes.string.isRequired
+};
+
+NoteForm.defaultProps = {
+  btnText: 'Add'
 };
 
 export default NoteForm;

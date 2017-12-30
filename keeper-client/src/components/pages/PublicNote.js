@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  Alert,
+  Col,
+  Grid,
+  Row
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import api from '../../api';
 import Loader from 'react-loader';
@@ -21,18 +27,24 @@ class PublicNote extends React.Component {
 
     return (
       <Loader loaded={loaded}>
-        <div className='row'>
-          <div className='col-xs-4 col-xs-offset-4 note-col'>
+        <Grid>
+          <Row className='show-grid'>
             {note &&
-                <NoteModal note={note} />
+                <Col xs={4} xsOffset={4} className='note-col'>
+                  <NoteModal note={note} />
+                </Col>
             }
+          </Row>
+          <Row className='show-grid'>
             {!note &&
-                <div className='alert alert-danger'>
-                  <p className='text-center'>Note not found</p>
-                </div>
+                <Col xs={4} xsOffset={4}>
+                  <Alert bsStyle='warning' className='text-center'>
+                    Note not found
+                  </Alert>
+                </Col>
             }
-          </div>
-        </div>
+          </Row>
+        </Grid>
       </Loader>
     );
   }

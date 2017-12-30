@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  Col,
+  Grid,
+  Row
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -13,10 +18,14 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className='container'>
-        <h2>Login</h2>
-        <LoginForm submit={this.handleSubmit} />
-      </div>
+      <Grid>
+        <Row className='show-grid'>
+          <Col xs={4} xsOffset={4}>
+            <h3>Login</h3>
+            <LoginForm submit={this.handleSubmit} />
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

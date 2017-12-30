@@ -1,6 +1,17 @@
 import React from 'react';
+import {
+  Button,
+  Col,
+  ControlLabel,
+  Form,
+  FormControl,
+  FormGroup
+} from 'react-bootstrap';
+import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
+
+bootstrapUtils.addStyle(Button, 'note');
 
 class LoginForm extends React.Component {
 
@@ -15,7 +26,7 @@ class LoginForm extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     this.setState({ loaded: false });
-    this.props.submit(this.state.data).catch(() => this.setState({ loaded: true }));
+    this.props.submit(this.state.data).catch(err => this.setState({ loaded: true, errors: err.data }));
   };
 
   onChange = e => {
@@ -29,32 +40,38 @@ class LoginForm extends React.Component {
 
     return (
       <Loader loaded={loaded}>
-      <form onSubmit={this.onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            id='email'
-            name='email'
-            value={data.email}
-            onChange={this.onChange}
-            className='form-control'
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            id='password'
-            name='password'
-            value={data.password}
-            onChange={this.onChange}
-            className='form-control'
-          />
-        </div>
-        <button type='submit' className='btn btn-info btn-lg'>Login</button>
-      </form>
-    </Loader>
+        <Form horizontal onSubmit={this.onSubmit}>
+          <FormGroup >
+            <Col componentClass={ControlLabel} sm={2}>
+              Email
+            </Col>
+            <Col sm={12}>
+              <FormControl
+                type='email'
+                name='email'
+                defaultValue={data.email}
+                onChange={this.onChange}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup >
+            <Col componentClass={ControlLabel} sm={2}>
+              Password
+            </Col>
+            <Col sm={12}>
+              <FormControl
+                type='password'
+                name='password'
+                defaultValue={data.password}
+                onChange={this.onChange}
+              />
+            </Col>
+          </FormGroup>
+          <Button bsStyle='note' type='submit'>
+            Login
+          </Button>
+        </Form>
+      </Loader>
     );
   }
 }

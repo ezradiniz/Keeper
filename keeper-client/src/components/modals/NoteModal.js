@@ -12,19 +12,16 @@ const customStyles = {
   content : {
     top: '35%',
     left: '50%',
+    maxWidth: '550px',
     transform: 'translate(-50%, -35%)',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    outline: 'none',
-    padding: '20px',
-    backgroundColor: '#23c6c8'
+    backgroundColor: '#ffef97'
   }
 };
 
 class NoteModal extends React.Component {
 
   state = {
-      isOpen: false
+    isOpen: false
   };
 
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
@@ -33,7 +30,7 @@ class NoteModal extends React.Component {
     const { note } = this.props;
 
     return (
-      <div>
+      <section>
         <NotePreview note={note} toggle={this.toggle} />
         <NoteTool {...this.props} />
         <Modal
@@ -43,13 +40,13 @@ class NoteModal extends React.Component {
         >
           <NoteView note={note} toggle={this.toggle} />
         </Modal>
-      </div>
+      </section>
     );
   }
 }
 
 NoteModal.propTypes = {
-  note: PropTypes.shape({}).isRequired,
+  note: PropTypes.object.isRequired,
 };
 
 export default NoteModal;

@@ -8,16 +8,17 @@ import { fetchCurrent } from './actions/user';
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
 import DashboardPage from './components/pages/DashboardPage';
-import NewNotePage from './components/pages/NewNotePage';
-import NotePage from './components/pages/NotePage';
 import ArchivePage from './components/pages/ArchivePage';
 import HomePage from './components/pages/HomePage';
 import PublicNote from './components/pages/PublicNote';
-import Navbar from './components/navigations/Navbar';
+import TopNavigation from './components/navigations/TopNavigation';
 
 import { Route } from 'react-router-dom';
 import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
+
+import alertOptions from './components/alerts';
+import AlertContainer from 'react-alert'
 
 class App extends React.Component {
 
@@ -35,61 +36,55 @@ class App extends React.Component {
   }
 
   render() {
-    const { loaded } = this.state;
     const { location, isAuthenticate } = this.props;
 
     return (
-      <Loader loaded={loaded}>
-        {isAuthenticate && <Route location={location} path='/' component={Navbar} />}
+      <div>
+        <AlertContainer ref={a => this.msg = a} {...alertOptions} />
+        {isAuthenticate && <Route message={(text, options) => this.msg.show(text, options)} location={location} path='/' component={TopNavigation} />}
         <Route
           location={location}
+          message={(text, options) => this.msg.show(text, options)}
           path='/'
           exact
           component={HomePage}
         />
-        <GuestRoute
-          location={location}
-          path='/signup'
-          exact
-          component={SignupPage}
-        />
-        <GuestRoute
-          location={location}
-          path='/login'
-          exact
-          component={LoginPage}
-        />
-        <UserRoute
-          location={location}
-          path='/note/:note'
-          exact
-          component={NotePage}
-        />
-        <UserRoute
-          location={location}
-          path='/notes/new'
-          exact
-          component={NewNotePage}
-        />
-        <UserRoute
-          location={location}
-          path='/dashboard'
-          exact
-          component={DashboardPage}
-        />
-        <UserRoute
-          location={location}
-          path='/archive'
-          exact
-          component={ArchivePage}
-        />
-        <Route
-          location={location}
-          path='/notes/public/:note'
-          exact
-          component={PublicNote}
-        />
-      </Loader>
+        <Loader loaded={this.state.loaded}>
+          <GuestRoute
+            location={location}
+            path='/signup'
+            exact
+            component={SignupPage}
+          />
+          <GuestRoute
+            location={location}
+            path='/login'
+            exact
+            component={LoginPage}
+          />
+          <UserRoute
+            location={location}
+            message={(text, options) => this.msg.show(text, options)}
+            path='/dashboard'
+            exact
+            component={DashboardPage}
+          />
+          <UserRoute
+            location={location}
+            message={(text, options) => this.msg.show(text, options)}
+            path='/archive'
+            exact
+            component={ArchivePage}
+          />
+          <Route
+            location={location}
+            message={(text, options) => this.msg.show(text, options)}
+            path='/notes/public/:note'
+            exact
+            component={PublicNote}
+          />
+        </Loader>
+      </div>
     );
   }
 }

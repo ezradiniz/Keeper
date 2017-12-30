@@ -1,36 +1,31 @@
-.note {
-  word-wrap: break-word;
-}
 
 .note-col {
-  background-color: #23c6c8;
+  background-color: #ffef97;
   word-wrap: break-word;
-  margin: 10px 5px 30px 20px;
-  box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
-  padding-top: 1px;
-  padding-left: 6px;
+  margin: 5px 0px 25px 60px;
+  box-shadow: 5px 5px 5px rgba(22, 22, 22, 0.7);
+  height: 245px;
 }
 
-.intro-content h5 {
-  font-weight: bold;
-  text-align: center;
+.note-col:hover {
+  background-color: #ffeb7e;
 }
 
-.note-content {
-  max-height: 130px;
-  height: 130px;
-  cursor: pointer;
+.note-icon {
+  color:  #585858;
 }
 
-.tool a {
-  padding: 10px;
+.note-view {
+  max-height: 60vh;
+  word-wrap: break-word;
 }
 
-.note-preview {
-  background-color: #23c6c8;
-  display: block;
+.note-editor {
+  max-height: 35vh;
+  overflow: auto;
 }
 
-.quit {
-  float: right;
+.btn-note {
+  background-color: #ffe03a;
+  color:  #585858;
 }

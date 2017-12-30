@@ -1,39 +1,31 @@
 import React from 'react';
+import {
+  Button,
+  Glyphicon
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import renderHTML from 'react-render-html';
 
-const style1 = {
+const style = {
   position: 'absolute',
-  fontSize: '10px',
-  bottom: '1px',
-  right: '5px',
-  fontWeight: 'bold'
-};
-
-const style2 = {
-  position: 'absolute',
-  fontSize: '10px',
-  bottom: '1px',
-  left: '5px',
-  fontWeight: 'bold'
+  top: 0,
+  right: 0,
 };
 
 const NoteView = ({ note, toggle }) => (
-  <div className='note'>
-    <span className='glyphicon glyphicon-remove-circle btn quit' onClick={toggle}></span>
-    <br/>
-    <div className='intro-content note-preview'>
-      <h5>{note.subject}</h5>
-      <p className='text-left'>{note.body}</p>
-      <p style={style1}> {note.updatedAt}</p>
-      <p style={style2}>
-        {(note.nickname) ? `Author: ${note.nickname}` : ''}
-      </p>
-    </div>
+  <div className='note-view'>
+    <Button style={style}bsStyle='link' onClick={toggle}>
+      <Glyphicon glyph='remove note-icon'/>
+    </Button>
+    <h5 className='text-center'>
+      <strong>{note.subject}</strong>
+    </h5>
+    {renderHTML(note.body)}
   </div>
 );
 
 NoteView.propTypes = {
-  note: PropTypes.shape({}).isRequired,
+  note: PropTypes.object.isRequired,
   toggle: PropTypes.func.isRequired
 };
 

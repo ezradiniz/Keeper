@@ -1,8 +1,13 @@
 import React from 'react';
+import {
+  Col,
+  Grid,
+  Row
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Loader from 'react-loader';
-import NoteSection from '../sections/NoteSection';
+import NoteModal from '../modals/NoteModal';
+import NotePageContainer from './NotePageContainer';
 import { connect } from 'react-redux';
 import { fetchAll } from '../../actions/note';
 import { allNotesSelector } from '../../reducers/note';
@@ -18,31 +23,48 @@ class DashboardPage extends React.Component {
   }
 
   render() {
-    const { notes } = this.props;
+    const { notes, message } = this.props;
 
     return (
-      <div className='container'>
-        <div className='text-center'>
-          <Link to='/notes/new' className='btn btn-info btn-lg'><span className='glyphicon glyphicon-plus'> Note</span></Link>
-        </div>
-        <hr/>
-        <Loader loaded={this.state.loaded}>
-          <NoteSection
-            notes={notes}
-            share
-            remove
-            archive
-            update
-          />
-        </Loader>
-      </div>
+      <Grid>
+        <Row className='show-grid'>
+          <Col md={8} mdOffset={2}>
+            <NotePageContainer message={this.props.message} />
+            <hr/>
+          </Col>
+        </Row>
+        <Row className='show-grid'>
+          <Loader loaded={this.state.loaded}>
+            {
+              notes.map((note, index) =>
+                <Col
+                  key={index}
+                  md={3}
+                  xs={10}
+                  className='note-col'
+                >
+                  <NoteModal
+                    note={note}
+                    message={message}
+                    share
+                    remove
+                    archive
+                    update
+                  />
+                </Col>
+              )
+            }
+          </Loader>
+        </Row>
+      </Grid>
     );
   }
 }
 
 DashboardPage.propTypes = {
   fetchAll: PropTypes.func.isRequired,
-  notes: PropTypes.array.isRequired
+  notes: PropTypes.array.isRequired,
+  message: PropTypes.func.isRequired
 };
 
 

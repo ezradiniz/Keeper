@@ -1,12 +1,14 @@
 import api from '../api';
 import {
+  NOTE_CURRENT_DETACHED,
+  NOTE_CURRENT_SETTED,
   NOTES_ARCHIVED_FETCHED,
   NOTES_FETCHED,
   NOTE_ARCHIVED,
   NOTE_CREATED,
   NOTE_PUBLIC_FETCHED,
   NOTE_REMOVED,
-  NOTE_UNARCHIVED,
+  NOTE_RESTORED,
   NOTE_UPDATED
 } from '../constantes/types';
 
@@ -35,8 +37,8 @@ const noteArchived = data => ({
   data
 });
 
-const noteUnarchived = data => ({
-  type: NOTE_UNARCHIVED,
+const noteRestored = data => ({
+  type: NOTE_RESTORED,
   data
 });
 
@@ -48,7 +50,17 @@ const notePublicFetched = data => ({
 const notesArchivedFetched = data => ({
   type: NOTES_ARCHIVED_FETCHED,
   data
-})
+});
+
+const noteCurrentSetted = data => ({
+  type: NOTE_CURRENT_SETTED,
+  data
+});
+
+const noteCurrentDetached = data => ({
+  type: NOTE_CURRENT_DETACHED,
+  data
+});
 
 export const create = note => dispatch =>
   api.note.create(note).then(data => {
@@ -70,9 +82,9 @@ export const archive = note => dispatch =>
     dispatch(noteArchived(data));
   });
 
-export const unarchive = note => dispatch =>
+export const restore = note => dispatch =>
   api.note.update(note).then((data) => {
-    dispatch(noteUnarchived(data));
+    dispatch(noteRestored(data));
   });
 
 export const fetchAllArchive = () => dispatch =>
@@ -89,3 +101,9 @@ export const fetchPublic = note => dispatch =>
   api.note.fetchPublic(note).then(data => {
     dispatch(notePublicFetched(data));
   });
+
+export const setCurrent = note => dispatch =>
+  dispatch(noteCurrentSetted(note));
+
+export const detachCurrent = () => dispatch =>
+  dispatch(noteCurrentDetached());
