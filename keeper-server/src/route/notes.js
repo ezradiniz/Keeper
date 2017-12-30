@@ -1,5 +1,6 @@
 import express from 'express';
 import Note from '../model/Note';
+import reqFilter from '../utils/reqFilter';
 
 import userAuthenticate from '../middlewares/userAuthenticate';
 
@@ -22,7 +23,8 @@ router.get('/', userAuthenticate, (req, res) => {
 });
 
 router.put('/:id', userAuthenticate, (req, res) => {
-  Note.findOneAndUpdate({ _id: req.params.id, user: req.userAuth._id }, { $set: {  ...req.body.note } }, { new: true })
+  const note = reqFilter(req.body.note, ['isPrivate', 'isArchived', 'subject', 'body']);
+  Note.findOneAndUpdate({ _id: req.params.id, user: req.userAuth._id }, { $set: {  ...note } }, { new: true })
     .then(note => res.json({ note }))
     .catch(err => res.status(400).json({ error: err }));
 });
