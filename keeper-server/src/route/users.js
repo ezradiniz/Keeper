@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
     .then(userRecord => {
       res.json({ user: userRecord.toJson() });
     })
-    .catch(err => res.status(400).json({ error: err }));
+    .catch(err => res.status(400).json({ error: 'Invalid data'}));
 });
 
 export default router;
