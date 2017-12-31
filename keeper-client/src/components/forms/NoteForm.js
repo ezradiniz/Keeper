@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   Col,
   ControlLabel,
@@ -11,7 +12,7 @@ import {
 import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import PropTypes from 'prop-types';
 import NoteEditor from '../editor/NoteEditor';
-import RichardTextEditor from 'react-rte';
+import RichTextEditor from 'react-rte';
 
 bootstrapUtils.addStyle(Button, 'note');
 
@@ -20,9 +21,10 @@ class NoteForm extends React.Component {
   state = {
     data: {
       subject: '',
-      body: '',
+      body: RichTextEditor.createEmptyValue(),
       isPrivate: 'true'
-    }
+    },
+    errors: {}
   };
 
   componentWillMount() {
@@ -31,7 +33,7 @@ class NoteForm extends React.Component {
         data: {
           ...this.props.data,
           isPrivate: this.props.data.isPrivate.toString(),
-          body: RichardTextEditor.createValueFromString(this.props.data.body, 'html')
+          body: RichTextEditor.createValueFromString(this.props.data.body, 'html')
         }
       });
     }
@@ -39,7 +41,12 @@ class NoteForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.submit({ ...this.state.data, body: this.state.data.body.toString('html') });
+    this.props
+      .submit({
+        ...this.state.data,
+        body: this.state.data.body.toString('html')
+      })
+      .catch(err => this.setState({ errors: err }));
   };
 
   onChange = e => {
@@ -48,8 +55,16 @@ class NoteForm extends React.Component {
     });
   };
 
+  validate = data => {
+    const errors = {};
+    if (data.body.length === 0) {
+      errors.body = 'Can not be blank';
+    }
+    return errors;
+  };
+
   render() {
-    const { data } = this.state;
+    const { data, errors } = this.state;
 
     return (
       <Form horizontal onSubmit={this.onSubmit}>
@@ -103,6 +118,7 @@ class NoteForm extends React.Component {
             {this.props.btnText}
           </Button>
         </div>
+        {errors.message && <Alert bsStyle='danger'>{errors.message}</Alert>}
       </Form>
     );
   }
