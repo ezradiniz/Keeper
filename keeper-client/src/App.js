@@ -5,17 +5,11 @@ import { connect } from 'react-redux';
 import setAuthToken from './api/setAuthToken';
 import { fetchCurrent } from './actions/user';
 
-import LoginPage from './components/pages/LoginPage';
-import SignupPage from './components/pages/SignupPage';
-import DashboardPage from './components/pages/DashboardPage';
-import ArchivePage from './components/pages/ArchivePage';
 import HomePage from './components/pages/HomePage';
-import PublicNote from './components/pages/PublicNote';
 import TopNavigation from './components/navigations/TopNavigation';
 
+import Routes from './components/routes';
 import { Route } from 'react-router-dom';
-import UserRoute from './components/routes/UserRoute';
-import GuestRoute from './components/routes/GuestRoute';
 
 import alertOptions from './components/alerts';
 import AlertContainer from 'react-alert'
@@ -35,53 +29,32 @@ class App extends React.Component {
     }
   }
 
+  onMessageAlert = (text, options) => this.msg.show(text, options);
+
   render() {
     const { location, isAuthenticate } = this.props;
 
     return (
       <div>
         <AlertContainer ref={a => this.msg = a} {...alertOptions} />
-        {isAuthenticate && <Route message={(text, options) => this.msg.show(text, options)} location={location} path='/' component={TopNavigation} />}
+        {isAuthenticate &&
+            <Route
+              location={location}
+              path='/'
+              component={TopNavigation}
+            />
+        }
         <Route
           location={location}
-          message={(text, options) => this.msg.show(text, options)}
+          message={this.onMessageAlert}
           path='/'
           exact
           component={HomePage}
         />
         <Loader loaded={this.state.loaded}>
-          <GuestRoute
+          <Routes
             location={location}
-            path='/signup'
-            exact
-            component={SignupPage}
-          />
-          <GuestRoute
-            location={location}
-            path='/login'
-            exact
-            component={LoginPage}
-          />
-          <UserRoute
-            location={location}
-            message={(text, options) => this.msg.show(text, options)}
-            path='/dashboard'
-            exact
-            component={DashboardPage}
-          />
-          <UserRoute
-            location={location}
-            message={(text, options) => this.msg.show(text, options)}
-            path='/archive'
-            exact
-            component={ArchivePage}
-          />
-          <Route
-            location={location}
-            message={(text, options) => this.msg.show(text, options)}
-            path='/notes/public/:note'
-            exact
-            component={PublicNote}
+            message={this.onMessageAlert}
           />
         </Loader>
       </div>

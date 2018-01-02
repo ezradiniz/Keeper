@@ -30,10 +30,12 @@ class NotePageContainer extends React.Component {
 
   handleClickOutside = e => {
     if (e) {
-      this.props.detachCurrent();
+      if (Object.keys(this.state.note).length !== 0) {
+        this.props.detachCurrent();
+      }
       this.setState({ focus: false, note: {} });
     }
-  };
+};
 
   handleSubmitCreate = data => this.props.create(data).then(() => {
     this.props.message('New note has been added', { type: 'success' });
