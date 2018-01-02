@@ -5,10 +5,12 @@ import thunk from 'redux-thunk';
 
 import user from './user';
 import note from './note';
+import log from './log';
 
 const reducers = combineReducers({
   user,
-  note
+  note,
+  log
 });
 
 export default createStore(

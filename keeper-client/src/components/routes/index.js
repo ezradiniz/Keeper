@@ -9,6 +9,7 @@ import SignupPage from '../pages/SignupPage';
 import DashboardPage from '../pages/DashboardPage';
 import ArchivePage from '../pages/ArchivePage';
 import PublicNote from '../pages/PublicNote';
+import LogPage from '../pages/LogPage';
 
 import { Route } from 'react-router-dom';
 
@@ -36,6 +37,13 @@ const Routes = ({ location, ...rest }) => {
         path='/dashboard'
         exact
         component={DashboardPage}
+      />
+      <UserRoute
+        {...rest}
+        location={location}
+        path='/logs'
+        exact
+        component={LogPage}
       />
       <UserRoute
         {...rest}

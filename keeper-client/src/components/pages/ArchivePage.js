@@ -31,7 +31,7 @@ class ArchivePage extends React.Component {
       <Loader loaded={this.state.loaded}>
         <Grid>
           <Row className='show-grid'>
-            <Col md={8} mdOffset={2}>
+            <Col xs={8} xsOffset={2}>
               <NotePageContainer message={this.props.message} updateOnly />
               <hr/>
             </Col>

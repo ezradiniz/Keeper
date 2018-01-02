@@ -29,6 +29,9 @@ const TopNavigation = ({ nickname, logout, location }) => (
         <LinkContainer to='/archive'>
           <NavItem>Archive</NavItem>
         </LinkContainer>
+        <LinkContainer to='/logs'>
+          <NavItem>Logs</NavItem>
+        </LinkContainer>
       </Nav>
       <Nav pullRight>
         <NavItem role='button' onClick={() => logout()}>

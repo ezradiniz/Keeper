@@ -14,5 +14,8 @@ export default {
     fetchPublic: note => axios.get(`/api/notes/${note}/public`).then(res => res.data.note),
     fetchAll: () => axios.get('/api/notes?archive=false').then(res => res.data.notes),
     fetchAllArchive: () => axios.get('/api/notes?archive=true').then(res => res.data.notes)
+  },
+  log: {
+    fetchAll: () => axios.get('/api/logs').then(res => res.data.logs)
   }
 };
