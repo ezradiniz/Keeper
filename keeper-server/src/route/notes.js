@@ -1,5 +1,6 @@
 import express from 'express';
 import Note from '../model/Note';
+import Log from '../model/Log';
 import reqFilter from '../utils/reqFilter';
 
 import userAuthenticate from '../middlewares/userAuthenticate';
@@ -8,7 +9,10 @@ const router = express.Router();
 
 router.post('/', userAuthenticate, (req, res) => {
   Note.create({ ...req.body.note, user: req.userAuth._id })
-    .then(note => res.json({ note }))
+    .then(note => {
+      Log.create({ type: 'CREATE', message: `Note ${note._id} created`, user: req.userAuth._id });
+      res.json({ note });
+    })
     .catch(err => res.status(400).json({ error: err }));
 });
 
@@ -25,7 +29,10 @@ router.get('/', userAuthenticate, (req, res) => {
 router.put('/:id', userAuthenticate, (req, res) => {
   const note = reqFilter(req.body.note, ['isPrivate', 'isArchived', 'subject', 'body']);
   Note.findOneAndUpdate({ _id: req.params.id, user: req.userAuth._id }, { $set: {  ...note } }, { new: true })
-    .then(note => res.json({ note }))
+    .then(note => {
+      Log.create({ type: 'UPDATE', message: `Note ${note._id} updated`, user: req.userAuth._id });
+      res.json({ note });
+    })
     .catch(err => res.status(400).json({ error: err }));
 });
 
@@ -37,7 +44,10 @@ router.get('/:id', userAuthenticate, (req, res) => {
 
 router.delete('/:id', userAuthenticate, (req, res) => {
   Note.findOneAndRemove({ _id: req.params.id, user: req.userAuth._id })
-    .then(note => res.json({ note }))
+    .then(note => {
+      Log.create({ type: 'DELETE', message: `Note ${note._id} deleted`, user: req.userAuth._id });
+      res.json({ note });
+    })
     .catch(err => res.status(400).json({ error: err }))
 });
 
