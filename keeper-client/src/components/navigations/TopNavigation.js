@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/user';
 
-const TopNavigation = ({ nickname, logout, location }) => (
+const TopNavigation = ({ isAuthenticate, nickname, logout, location }) => (
   <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
@@ -21,27 +21,41 @@ const TopNavigation = ({ nickname, logout, location }) => (
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
-    <Navbar.Collapse>
-      <Nav activeHref={location.pathname}>
-        <LinkContainer to='/dashboard'>
-          <NavItem>Dashboard</NavItem>
-        </LinkContainer>
-        <LinkContainer to='/archive'>
-          <NavItem>Archive</NavItem>
-        </LinkContainer>
-        <LinkContainer to='/logs'>
-          <NavItem>Logs</NavItem>
-        </LinkContainer>
-      </Nav>
-      <Nav pullRight>
-        <NavItem role='button' onClick={() => logout()}>
-          <span className='glyphicon glyphicon-log-out'> Logout</span>
-        </NavItem>
-      </Nav>
-      <Navbar.Text pullRight>
-        <span className='glyphicon glyphicon-user'> {nickname}</span>
-      </Navbar.Text>
-    </Navbar.Collapse>
+    {!isAuthenticate &&
+        <Navbar.Collapse>
+          <Nav pullRight>
+            <LinkContainer to='/login'>
+              <NavItem>Login</NavItem>
+            </LinkContainer>
+            <LinkContainer to='/signup'>
+              <NavItem>Sign Up</NavItem>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+    }
+    {isAuthenticate &&
+        <Navbar.Collapse>
+          <Nav activeHref={location.pathname}>
+            <LinkContainer to='/dashboard'>
+              <NavItem>Dashboard</NavItem>
+            </LinkContainer>
+            <LinkContainer to='/archive'>
+              <NavItem>Archive</NavItem>
+            </LinkContainer>
+            <LinkContainer to='/logs'>
+              <NavItem>Logs</NavItem>
+            </LinkContainer>
+          </Nav>
+          <Nav pullRight>
+            <NavItem role='button' onClick={() => logout()}>
+              <span className='glyphicon glyphicon-log-out'> Logout</span>
+            </NavItem>
+          </Nav>
+          <Navbar.Text pullRight>
+            <span className='glyphicon glyphicon-user'> {nickname}</span>
+          </Navbar.Text>
+        </Navbar.Collapse>
+    }
   </Navbar>
 );
 
@@ -55,7 +69,8 @@ TopNavigation.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    nickname: state.user.nickname
+    nickname: state.user.nickname || '',
+    isAuthenticate : !!state.user.token
   };
 }
 

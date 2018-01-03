@@ -32,18 +32,16 @@ class App extends React.Component {
   onMessageAlert = (text, options) => this.msg.show(text, options);
 
   render() {
-    const { location, isAuthenticate } = this.props;
+    const { location } = this.props;
 
     return (
       <div>
         <AlertContainer ref={a => this.msg = a} {...alertOptions} />
-        {isAuthenticate &&
-            <Route
-              location={location}
-              path='/'
-              component={TopNavigation}
-            />
-        }
+        <Route
+          location={location}
+          path='/'
+          component={TopNavigation}
+        />
         <Route
           location={location}
           message={this.onMessageAlert}
@@ -69,10 +67,5 @@ App.propTypes = {
   fetchCurrent: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    isAuthenticate : !!state.user.token
-  };
-}
 
-export default connect(mapStateToProps, { fetchCurrent })(App);
+export default connect(null, { fetchCurrent })(App);
