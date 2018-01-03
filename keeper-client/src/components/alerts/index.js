@@ -1,7 +1,7 @@
 
 export default {
-  offset: 14,
-  position: 'bottom right',
+  offset: 30,
+  position: 'top right',
   theme: 'light',
   time: 5000,
   transition: 'fade'
