@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   Col,
   ControlLabel,
@@ -27,7 +28,7 @@ class SignupForm extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     this.setState({ loaded: false });
-    this.props.submit(this.state.data).catch(() => this.setState({ loaded: true }));
+    this.props.submit(this.state.data).catch(() => this.setState({ loaded: true, errors: true }));
   };
 
   onChange = e => {
@@ -37,10 +38,17 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const { data, loaded } = this.state;
+    const { data, loaded, errors } = this.state;
 
     return (
       <Loader loaded={loaded}>
+        {errors &&
+          <Col>
+            <Alert bsStyle='warning'>
+              <strong>Warning</strong> - Some error ocurred. Please try again.
+            </Alert>
+          </Col>
+        }
         <Form horizontal onSubmit={this.onSubmit}>
           <FormGroup >
             <Col componentClass={ControlLabel} sm={2}>

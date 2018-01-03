@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   Col,
   ControlLabel,
@@ -26,7 +27,7 @@ class LoginForm extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     this.setState({ loaded: false });
-    this.props.submit(this.state.data).catch(err => this.setState({ loaded: true, errors: err.data }));
+    this.props.submit(this.state.data).catch(() => this.setState({ loaded: true, errors: true }));
   };
 
   onChange = e => {
@@ -36,10 +37,17 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { data, loaded } = this.state;
+    const { data, loaded, errors } = this.state;
 
     return (
       <Loader loaded={loaded}>
+        {errors &&
+          <Col>
+            <Alert bsStyle='warning'>
+              <strong>Warning</strong> - Invalid Email or Password
+            </Alert>
+          </Col>
+        }
         <Form horizontal onSubmit={this.onSubmit}>
           <FormGroup >
             <Col componentClass={ControlLabel} sm={2}>
