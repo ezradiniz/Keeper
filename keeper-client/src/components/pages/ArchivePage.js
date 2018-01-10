@@ -10,13 +10,9 @@ import NotePageContainer from './NotePageContainer';
 import NoteModal from '../modals/NoteModal';
 import Loader from 'react-loader';
 import { fetchAllArchive, remove } from '../../actions/note';
-import { allNotesSelector } from '../../reducers/note';
+import { allNotesSelector, notesLoaderSelector } from '../../reducers/note';
 
 class ArchivePage extends React.Component {
-
-  state = {
-    loaded: false
-  };
 
   componentDidMount() {
     this.props.fetchAllArchive().then(() => this.setState({ loaded: true }));
@@ -25,10 +21,10 @@ class ArchivePage extends React.Component {
   handleRemove = note => this.props.remove(note);
 
   render() {
-    const { notes, message } = this.props;
+    const { notes, message, loaded } = this.props;
 
     return (
-      <Loader loaded={this.state.loaded}>
+      <Loader loaded={loaded}>
         <Grid>
           <Row className='show-grid'>
             <Col xs={8} xsOffset={2}>
@@ -77,7 +73,8 @@ ArchivePage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    notes: allNotesSelector(state)
+    notes: allNotesSelector(state),
+    loaded: notesLoaderSelector(state)
   };
 }
 

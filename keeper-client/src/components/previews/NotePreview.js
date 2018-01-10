@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { formatText } from '../../util/noteText';
 import renderHTML from 'react-render-html';
+import RichTextEditor from 'react-rte';
 
 const style = {
   cursor: 'pointer',
@@ -16,7 +17,7 @@ const NotePreview = ({ note, toggle }) => (
     <h5 className='text-center'>
       <strong>{formatText(note.subject, 20)}</strong>
     </h5>
-    {renderHTML(note.body)}
+    {renderHTML(RichTextEditor.createValueFromString(note.body, 'raw').toString('html'))}
   </div>
 );
 

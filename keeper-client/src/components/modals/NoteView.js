@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
+import RichTextEditor from 'react-rte';
 
 const style = {
   position: 'absolute',
@@ -20,7 +21,7 @@ const NoteView = ({ note, toggle }) => (
     <h5 className='text-center'>
       <strong>{note.subject}</strong>
     </h5>
-    {renderHTML(note.body)}
+    {renderHTML(RichTextEditor.createValueFromString(note.body, 'raw').toString('html'))}
   </div>
 );
 

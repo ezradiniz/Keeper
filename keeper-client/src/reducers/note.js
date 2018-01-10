@@ -14,23 +14,25 @@ export const allNotesSelector = state => [ ...state.note.notes ];
 
 export const currentNoteSelector = state => { return { ...state.note.current } };
 
-export default function notes(state = { notes: [], current: {}}, action = {}) {
+export const notesLoaderSelector = state => state.note.loaded;
+
+export default function notes(state = { notes: [], archived: [], current: {}, loaded: false }, action = {}) {
   switch(action.type) {
     case NOTE_CURRENT_DETACHED:
       return { ...state, current: {} };
     case NOTE_CURRENT_SETTED:
       return { ...state, current: action.data };
     case NOTE_UPDATED:
-      return { notes: [ ...state.notes.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )] };
+      return { notes: [ ...state.notes.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )], loaded: true };
     case NOTE_CREATED:
-      return { notes: [ action.data, ...state.notes ] };
+      return { notes: [ action.data, ...state.notes ], loaded: true};
     case NOTES_ARCHIVED_FETCHED:
     case NOTES_FETCHED:
-      return { notes: [ ...action.data ] };
+      return { notes: [ ...action.data ], loaded: true };
     case NOTE_ARCHIVED:
     case NOTE_RESTORED:
     case NOTE_REMOVED:
-      return { notes: [ ...state.notes.filter(n => n._id !== action.data.note._id) ] };
+      return { notes: [ ...state.notes.filter(n => n._id !== action.data.note._id) ], loaded: true };
     default:
       return state;
   }

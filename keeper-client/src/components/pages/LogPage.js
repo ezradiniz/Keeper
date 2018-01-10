@@ -9,23 +9,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { fetchAll } from '../../actions/log';
-import { allLogsSelector } from '../../reducers/log'
+import { allLogsSelector, logsLoaderSelector } from '../../reducers/log'
 
 class LogPage extends React.Component {
-
-  state = {
-    loaded: false
-  };
 
   componentDidMount() {
     this.props.fetchAll().then(() => this.setState({ loaded: true }));
   }
 
   render() {
-    const { logs } = this.props;
+    const { logs, loaded } = this.props;
 
     return (
-      <Loader loaded={this.state.loaded}>
+      <Loader loaded={loaded}>
         <Grid>
           <Row className='show-grid'>
             <Col className='text-center'>
@@ -59,7 +55,8 @@ LogPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    logs: allLogsSelector(state)
+    logs: allLogsSelector(state),
+    loaded: logsLoaderSelector(state)
   };
 }
 

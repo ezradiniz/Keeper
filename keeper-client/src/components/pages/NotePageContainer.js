@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button
-} from 'react-bootstrap';
-import { bootstrapUtils } from 'react-bootstrap/lib/utils';
 import NoteForm from '../forms/NoteForm';
+import CustomButton from '../buttons/CustomButton';
 import { connect } from 'react-redux';
 import { create, update, detachCurrent } from '../../actions/note';
 import onClickOutside from 'react-onclickoutside';
 import { currentNoteSelector } from '../../reducers/note';
-
-bootstrapUtils.addStyle(Button, 'note');
 
 class NotePageContainer extends React.Component {
 
@@ -53,13 +48,10 @@ class NotePageContainer extends React.Component {
       <div>
         {!focus && !updateOnly &&
             <div className='text-center'>
-              <Button
+              <CustomButton
                 onClick={this.handleClick}
-                bsStyle='note'
-                bsSize='large'
-              >
-                New
-              </Button>
+                text='New'
+              />
             </div>
         }
           {focus &&

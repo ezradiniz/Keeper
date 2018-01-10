@@ -10,20 +10,16 @@ import NoteModal from '../modals/NoteModal';
 import NotePageContainer from './NotePageContainer';
 import { connect } from 'react-redux';
 import { fetchAll } from '../../actions/note';
-import { allNotesSelector } from '../../reducers/note';
+import { allNotesSelector,  notesLoaderSelector} from '../../reducers/note';
 
 class DashboardPage extends React.Component {
-
-  state = {
-    loaded: false
-  };
 
   componentDidMount() {
     this.props.fetchAll().then(() => this.setState({ loaded: true }));
   }
 
   render() {
-    const { notes, message } = this.props;
+    const { notes, message, loaded } = this.props;
 
     return (
       <Grid>
@@ -34,7 +30,7 @@ class DashboardPage extends React.Component {
           </Col>
         </Row>
         <Row className='show-grid'>
-          <Loader loaded={this.state.loaded}>
+          <Loader loaded={loaded}>
             {
               notes.map((note, index) =>
                 <Col
@@ -70,7 +66,8 @@ DashboardPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    notes: allNotesSelector(state)
+    notes: allNotesSelector(state),
+    loaded: notesLoaderSelector(state)
   };
 }
 

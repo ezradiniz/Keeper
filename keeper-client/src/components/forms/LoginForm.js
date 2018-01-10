@@ -1,18 +1,15 @@
 import React from 'react';
 import {
   Alert,
-  Button,
   Col,
   ControlLabel,
   Form,
   FormControl,
   FormGroup
 } from 'react-bootstrap';
-import { bootstrapUtils } from 'react-bootstrap/lib/utils';
+import CustomButton from '../buttons/CustomButton';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
-
-bootstrapUtils.addStyle(Button, 'note');
 
 class LoginForm extends React.Component {
 
@@ -75,9 +72,10 @@ class LoginForm extends React.Component {
               />
             </Col>
           </FormGroup>
-          <Button bsStyle='note' type='submit'>
-            Login
-          </Button>
+          <CustomButton
+            type='submit'
+            text='Login'
+          />
         </Form>
       </Loader>
     );

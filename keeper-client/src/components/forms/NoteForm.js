@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Alert,
-  Button,
   Col,
   ControlLabel,
   Form,
@@ -9,12 +8,10 @@ import {
   FormGroup,
   Radio,
 } from 'react-bootstrap';
-import { bootstrapUtils } from 'react-bootstrap/lib/utils';
+import CustomButton from '../buttons/CustomButton';
 import PropTypes from 'prop-types';
 import NoteEditor from '../editor/NoteEditor';
 import RichTextEditor from 'react-rte';
-
-bootstrapUtils.addStyle(Button, 'note');
 
 class NoteForm extends React.Component {
 
@@ -33,7 +30,7 @@ class NoteForm extends React.Component {
         data: {
           ...this.props.data,
           isPrivate: this.props.data.isPrivate.toString(),
-          body: RichTextEditor.createValueFromString(this.props.data.body, 'html')
+          body: RichTextEditor.createValueFromString(this.props.data.body, 'raw')
         }
       });
     }
@@ -44,7 +41,7 @@ class NoteForm extends React.Component {
     this.props
       .submit({
         ...this.state.data,
-        body: this.state.data.body.toString('html')
+        body: this.state.data.body.toString('raw')
       })
       .catch(err => this.setState({ errors: err }));
   };
@@ -53,14 +50,6 @@ class NoteForm extends React.Component {
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value }
     });
-  };
-
-  validate = data => {
-    const errors = {};
-    if (data.body.length === 0) {
-      errors.body = 'Can not be blank';
-    }
-    return errors;
   };
 
   render() {
@@ -114,9 +103,10 @@ class NoteForm extends React.Component {
           </Col>
         </FormGroup>
         <div className='text-center'>
-          <Button bsStyle='note' type='submit' bsSize='large'>
-            {this.props.btnText}
-          </Button>
+          <CustomButton
+            type='submit'
+            text={this.props.btnText}
+          />
         </div>
         {errors.message && <Alert bsStyle='danger'>{errors.message}</Alert>}
       </Form>
