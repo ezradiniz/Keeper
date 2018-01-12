@@ -42,6 +42,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         archived: [ ...state.archived.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
+        query: [ ...state.query.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
         loaded: true,
         searching: state.searching
       };
@@ -49,6 +50,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         notes: [ ...state.notes.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
+        query: [ ...state.query.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
         loaded: true,
         searching: state.searching
       };
@@ -57,6 +59,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
         ...state,
         notes: [ ...state.notes.filter(n => n._id !== action.data.note._id) ],
         archived: [ ...state.archived, action.data.note ],
+        query: [ ...state.query.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
         loaded: true,
         searching: state.searching
       };
@@ -65,6 +68,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
         ...state,
         archived: [ ...state.archived.filter(n => n._id !== action.data.note._id) ],
         notes: [ ...state.notes, action.data.note ],
+        query: [ ...state.query.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
         loaded: true,
         searching: state.searching
       };
@@ -72,6 +76,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         notes: [ ...state.notes.filter(n => n._id !== action.data.note._id) ],
+        query: [ ...state.query.filter(n => n._id !== action.data.note._id) ],
         loaded: true,
         searching: state.searching
       };
@@ -79,6 +84,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         archived: [ ...state.archived.filter(n => n._id !== action.data.note._id) ],
+        query: [ ...state.query.filter(n => n._id !== action.data.note._id) ],
         loaded: true,
         searching: state.searching
       };
@@ -93,7 +99,8 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         query: [],
-        loaded: true
+        loaded: true,
+        searching: false
       };
     default:
       return state;

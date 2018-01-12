@@ -39,7 +39,6 @@ class ArchivePage extends React.Component {
                 message={this.props.message}
                 updateOnly
               />
-              <hr/>
             </Col>
           </Row>
           {!searching &&

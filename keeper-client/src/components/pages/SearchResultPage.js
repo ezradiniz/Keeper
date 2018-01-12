@@ -34,9 +34,6 @@ class SearchResultContainer extends React.Component {
   render() {
     const { message } = this.props;
 
-    /*
-     * TODO: Fix Update, Restore and Archive for search action
-     */
     return (
       <Grid>
         <Row className='show-grid'>
