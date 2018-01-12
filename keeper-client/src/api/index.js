@@ -13,7 +13,8 @@ export default {
     fetch: note => axios.get(`/api/notes/${note}`).then(res => res.data.note),
     fetchPublic: note => axios.get(`/api/notes/${note}/public`).then(res => res.data.note),
     fetchAll: () => axios.get('/api/notes?archive=false').then(res => res.data.notes),
-    fetchAllArchive: () => axios.get('/api/notes?archive=true').then(res => res.data.notes)
+    fetchAllArchive: () => axios.get('/api/notes?archive=true').then(res => res.data.notes),
+    fetchQuery: query => axios.get(`/api/notes?q=${query}`).then(res => res.data.notes)
   },
   log: {
     fetchAll: () => axios.get('/api/logs').then(res => res.data.logs)

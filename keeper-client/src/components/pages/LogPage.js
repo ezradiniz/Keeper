@@ -14,7 +14,9 @@ import { allLogsSelector, logsLoaderSelector } from '../../reducers/log'
 class LogPage extends React.Component {
 
   componentDidMount() {
-    this.props.fetchAll().then(() => this.setState({ loaded: true }));
+    if (this.props.logs.length === 0) {
+      this.props.fetchAll().then(() => this.setState({ loaded: true }));
+    }
   }
 
   render() {

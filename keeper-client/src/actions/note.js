@@ -3,17 +3,26 @@ import {
   NOTE_CURRENT_DETACHED,
   NOTE_CURRENT_SETTED,
   NOTES_ARCHIVED_FETCHED,
+  NOTES_QUERY_FETCHED,
+  NOTES_QUERY_DETACHED,
   NOTES_FETCHED,
   NOTE_ARCHIVED,
   NOTE_CREATED,
   NOTE_PUBLIC_FETCHED,
-  NOTE_REMOVED,
+  NOTE_ARCHIVED_REMOVED,
+  NOTE_DASHBOARD_REMOVED,
   NOTE_RESTORED,
-  NOTE_UPDATED
+  NOTE_ARCHIVED_UPDATED,
+  NOTE_DASHBOARD_UPDATED
 } from '../constantes/types';
 
 const notesFetched = data => ({
   type: NOTES_FETCHED,
+  data
+});
+
+const notesQueryFetched = data => ({
+  type: NOTES_QUERY_FETCHED,
   data
 });
 
@@ -22,13 +31,23 @@ const noteCreated = data => ({
   data
 });
 
-const noteRemoved = data => ({
-  type: NOTE_REMOVED,
+const noteDashboardRemoved = data => ({
+  type: NOTE_DASHBOARD_REMOVED,
   data
 });
 
-const noteUpdated = data => ({
-  type: NOTE_UPDATED,
+const noteArchivedRemoved = data => ({
+  type: NOTE_ARCHIVED_REMOVED,
+  data
+});
+
+const noteDashboardUpdated = data => ({
+  type: NOTE_DASHBOARD_UPDATED,
+  data
+});
+
+const noteArchivedUpdated = data => ({
+  type: NOTE_ARCHIVED_UPDATED,
   data
 });
 
@@ -62,6 +81,11 @@ const noteCurrentDetached = data => ({
   data
 });
 
+const notesQueryDetached = data => ({
+  type: NOTES_QUERY_DETACHED,
+  data
+});
+
 export const create = note => dispatch =>
   api.note.create(note).then(data => {
     dispatch(noteCreated(data));
@@ -69,12 +93,20 @@ export const create = note => dispatch =>
 
 export const remove = note => dispatch =>
   api.note.remove(note).then(data => {
-    dispatch(noteRemoved(data));
+    if (data.note.isArchived) {
+      dispatch(noteArchivedRemoved(data));
+    } else {
+      dispatch(noteDashboardRemoved(data));
+    }
   });
 
 export const update = note => dispatch =>
   api.note.update(note).then(data => {
-    dispatch(noteUpdated(data));
+    if (data.note.isArchived) {
+      dispatch(noteArchivedUpdated(data));
+    } else {
+      dispatch(noteDashboardUpdated(data));
+    }
   });
 
 export const archive = note => dispatch =>
@@ -97,6 +129,11 @@ export const fetchAll = () => dispatch =>
     dispatch(notesFetched(data));
   });
 
+export const fetchQuery = query => dispatch =>
+  api.note.fetchQuery(query).then(data => {
+    dispatch(notesQueryFetched(data));
+  });
+
 export const fetchPublic = note => dispatch =>
   api.note.fetchPublic(note).then(data => {
     dispatch(notePublicFetched(data));
@@ -107,3 +144,6 @@ export const setCurrent = note => dispatch =>
 
 export const detachCurrent = () => dispatch =>
   dispatch(noteCurrentDetached());
+
+export const detachQuery = () => dispatch =>
+  dispatch(notesQueryDetached());

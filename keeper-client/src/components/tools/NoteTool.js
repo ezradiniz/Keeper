@@ -49,45 +49,41 @@ class NoteTool extends React.Component {
 
 
   render() {
-    const { note, remove, share, archive, update, restore } = this.props;
+    const { note } = this.props;
 
     return (
       <ButtonToolbar style={style}>
-        {share && note.isPrivate === false &&
+        {note.isPrivate === false &&
           <OverlayTrigger placement='bottom' overlay={shareTip}>
             <LinkContainer to={`/notes/public/${note._id}`}>
               <Button bsStyle='link'><Glyphicon glyph='share-alt note-icon' /></Button>
             </LinkContainer>
           </OverlayTrigger>
         }
-        {restore &&
+        {note.isArchived &&
             <OverlayTrigger placement='bottom' overlay={restoreTip}>
               <Button bsStyle='link' onClick={this.onRestore}>
                 <Glyphicon glyph='folder-open note-icon' />
               </Button>
             </OverlayTrigger>
         }
-        {archive &&
+        {!note.isArchived &&
             <OverlayTrigger placement='bottom' overlay={archiveTip}>
               <Button bsStyle='link' onClick={this.onArchive}>
                 <Glyphicon glyph='folder-close note-icon' />
               </Button>
             </OverlayTrigger>
         }
-        {update &&
-            <OverlayTrigger placement='bottom' overlay={updateTip}>
-              <Button bsStyle='link' onClick={() => this.props.currentAction(note)}>
-                <Glyphicon glyph='edit note-icon' />
-            </Button>
-            </OverlayTrigger>
-        }
-        {remove &&
-            <OverlayTrigger placement='bottom' overlay={removeTip}>
-              <Button bsStyle='link' onClick={this.onRemove}>
-                <Glyphicon glyph='minus-sign note-icon' />
-              </Button>
-            </OverlayTrigger>
-        }
+        <OverlayTrigger placement='bottom' overlay={updateTip}>
+          <Button bsStyle='link' onClick={() => this.props.currentAction(note)}>
+            <Glyphicon glyph='edit note-icon' />
+          </Button>
+        </OverlayTrigger>
+        <OverlayTrigger placement='bottom' overlay={removeTip}>
+          <Button bsStyle='link' onClick={this.onRemove}>
+            <Glyphicon glyph='minus-sign note-icon' />
+          </Button>
+        </OverlayTrigger>
       </ButtonToolbar>
     );
   }
@@ -95,11 +91,6 @@ class NoteTool extends React.Component {
 
 NoteTool.propTypes = {
   note: PropTypes.object.isRequired,
-  remove: PropTypes.bool,
-  share: PropTypes.bool,
-  archive: PropTypes.bool,
-  restore: PropTypes.bool,
-  update: PropTypes.bool,
   removeAction: PropTypes.func.isRequired,
   archiveAction: PropTypes.func.isRequired,
   restoreAction: PropTypes.func.isRequired,

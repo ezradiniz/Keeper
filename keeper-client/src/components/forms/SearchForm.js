@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   FormControl,
   FormGroup
@@ -7,18 +8,20 @@ import {
 class SearchForm extends React.Component {
 
   state = {
-    query: '',
+    query: ''
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.query === 'ok') return;
+    this.setState({ query: nextProps.query });
+  }
 
   onChange = e => {
     clearTimeout(this.timer);
     this.setState({ query: e.target.value });
     this.timer = setTimeout(() => {
-      if (!this.state.query) return;
-      /*
-       * TODO: implement action search
-       */
-      console.log('NOTE IMPLEMENTED YET');
+      this.props.submit(this.state.query);
+      this.props.history.push('/search')
     }, 500);
   };
 
@@ -28,11 +31,16 @@ class SearchForm extends React.Component {
         <FormControl
           type='text'
           placeholder='Search'
+          value={this.state.query}
           onChange={this.onChange}
         />
       </FormGroup>
     );
   }
 }
+
+SearchForm.propTypes = {
+  submit: PropTypes.func.isRequired
+};
 
 export default SearchForm;

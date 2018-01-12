@@ -46,7 +46,7 @@ class NoteModal extends React.Component {
 }
 
 NoteModal.propTypes = {
-  note: PropTypes.object.isRequired,
+  note: PropTypes.object.isRequired
 };
 
 export default NoteModal;

@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import NoteForm from '../forms/NoteForm';
 import CustomButton from '../buttons/CustomButton';
 import { connect } from 'react-redux';
-import { create, update, detachCurrent } from '../../actions/note';
-import onClickOutside from 'react-onclickoutside';
+import {
+  create,
+  update,
+  detachCurrent
+} from '../../actions/note';
 import { currentNoteSelector } from '../../reducers/note';
+import onClickOutside from 'react-onclickoutside';
 
-class NotePageContainer extends React.Component {
+class NoteContainer extends React.Component {
 
   state = {
     focus: false,
@@ -30,7 +34,7 @@ class NotePageContainer extends React.Component {
       }
       this.setState({ focus: false, note: {} });
     }
-};
+  };
 
   handleSubmitCreate = data => this.props.create(data).then(() => {
     this.props.message('New note has been added', { type: 'success' });
@@ -54,19 +58,19 @@ class NotePageContainer extends React.Component {
               />
             </div>
         }
-          {focus &&
+        {focus &&
             <NoteForm
               submit={Object.keys(note).length !== 0 ? this.handleSubmitUpdate : this.handleSubmitCreate}
               data={Object.keys(note).length !== 0 ? note : null}
               btnText={Object.keys(note).length !== 0 ? 'Update': 'Add'}
             />
-          }
+        }
       </div>
     );
   }
 }
 
-NotePageContainer.propTypes = {
+NoteContainer.propTypes = {
   update: PropTypes.func.isRequired,
   create: PropTypes.func.isRequired,
   message: PropTypes.func.isRequired,
@@ -81,4 +85,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { create, update, detachCurrent })(onClickOutside(NotePageContainer));
+export default connect(mapStateToProps, {
+  create,
+  update,
+  detachCurrent
+})(onClickOutside(NoteContainer));

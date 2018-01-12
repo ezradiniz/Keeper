@@ -10,12 +10,21 @@ import SearchForm from '../forms/SearchForm';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { fetchQuery, fetchAll, fetchAllArchive } from '../../actions/note';
 import { logout } from '../../actions/user';
 
 class TopNavigation extends React.Component {
 
+  submit = query => this.props.fetchQuery(query);
+
   render() {
-    const { isAuthenticate, nickname, logout, location } = this.props;
+    const {
+      isAuthenticate,
+      history,
+      nickname,
+      logout,
+      location
+    } = this.props;
 
     return (
       <Navbar>
@@ -52,11 +61,13 @@ class TopNavigation extends React.Component {
                   <NavItem>Logs</NavItem>
                 </LinkContainer>
               </Nav>
-              {(location.pathname === '/dashboard' || location.pathname === '/archive') &&
-                  <Navbar.Form pullLeft>
-                    <SearchForm />
-                  </Navbar.Form>
-              }
+              <Navbar.Form pullLeft>
+                <SearchForm
+                  submit={this.submit}
+                  query={location.pathname === '/search' ? 'ok' : ''}
+                  history={history}
+                />
+              </Navbar.Form>
               <Nav pullRight>
                 <NavItem role='button' onClick={() => logout()}>
                   <span className='glyphicon glyphicon-log-out'> Logout</span>
@@ -68,7 +79,6 @@ class TopNavigation extends React.Component {
             </Navbar.Collapse>
         }
       </Navbar>
-
     );
   }
 }
@@ -88,4 +98,9 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { logout })(TopNavigation);
+export default connect(mapStateToProps, {
+  fetchAll,
+  fetchAllArchive,
+  fetchQuery,
+  logout
+})(TopNavigation);

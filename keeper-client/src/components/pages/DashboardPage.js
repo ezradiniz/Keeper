@@ -7,15 +7,20 @@ import {
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
 import NoteModal from '../modals/NoteModal';
-import NotePageContainer from './NotePageContainer';
+import NoteContainer from '../containers/NoteContainer';
 import { connect } from 'react-redux';
 import { fetchAll } from '../../actions/note';
-import { allNotesSelector,  notesLoaderSelector} from '../../reducers/note';
+import {
+  allNotesSelector,
+  notesLoaderSelector
+} from '../../reducers/note';
 
 class DashboardPage extends React.Component {
 
   componentDidMount() {
-    this.props.fetchAll().then(() => this.setState({ loaded: true }));
+    if (this.props.notes.length === 0) {
+      this.props.fetchAll().then(() => this.setState({ loaded: true }));
+    }
   }
 
   render() {
@@ -25,7 +30,10 @@ class DashboardPage extends React.Component {
       <Grid>
         <Row className='show-grid'>
           <Col md={8} mdOffset={2}>
-            <NotePageContainer message={this.props.message} />
+            <NoteContainer
+              location={this.props.location}
+              message={this.props.message}
+            />
             <hr/>
           </Col>
         </Row>
@@ -42,10 +50,6 @@ class DashboardPage extends React.Component {
                   <NoteModal
                     note={note}
                     message={message}
-                    share
-                    remove
-                    archive
-                    update
                   />
                 </Col>
               )

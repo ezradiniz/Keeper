@@ -10,10 +10,11 @@ import DashboardPage from '../pages/DashboardPage';
 import ArchivePage from '../pages/ArchivePage';
 import PublicNote from '../pages/PublicNote';
 import LogPage from '../pages/LogPage';
+import SearchResultPage from '../pages/SearchResultPage';
 
 import { Route } from 'react-router-dom';
 
-const Routes = ({ location, ...rest }) => {
+const Routes = ({ location, searching, ...rest }) => {
 
   return (
     <div>
@@ -31,35 +32,43 @@ const Routes = ({ location, ...rest }) => {
         exact
         component={LoginPage}
       />
-      <UserRoute
-        {...rest}
-        location={location}
-        path='/dashboard'
-        exact
-        component={DashboardPage}
-      />
-      <UserRoute
-        {...rest}
-        location={location}
-        path='/logs'
-        exact
-        component={LogPage}
-      />
-      <UserRoute
-        {...rest}
-        location={location}
-        path='/archive'
-        exact
-        component={ArchivePage}
-      />
-      <Route
-        {...rest}
-        location={location}
-        path='/notes/public/:note'
-        exact
-        component={PublicNote}
-      />
-    </div>
+
+    <UserRoute
+      {...rest}
+      location={location}
+      path='/dashboard'
+      exact
+      component={DashboardPage}
+    />
+    <UserRoute
+      {...rest}
+      location={location}
+      path='/logs'
+      exact
+      component={LogPage}
+    />
+    <UserRoute
+      {...rest}
+      location={location}
+      path='/archive'
+      exact
+      component={ArchivePage}
+    />
+    <Route
+      {...rest}
+      location={location}
+      path='/notes/public/:note'
+      exact
+      component={PublicNote}
+    />
+    <UserRoute
+      {...rest}
+      location={location}
+      path='/search'
+      exact
+      component={SearchResultPage}
+    />
+  </div>
   );
 };
 
@@ -67,6 +76,7 @@ Routes.propsType = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired,
+  searching: PropTypes.bool.isRequired
 };
 
 export default Routes;
