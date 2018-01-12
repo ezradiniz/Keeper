@@ -2,6 +2,7 @@ import express from 'express';
 import Note from '../model/Note';
 import Log from '../model/Log';
 import reqFilter from '../utils/reqFilter';
+import search from '../utils/search';
 
 import userAuthenticate from '../middlewares/userAuthenticate';
 
@@ -22,8 +23,16 @@ router.get('/', userAuthenticate, (req, res) => {
     filter.isArchived = req.query.archive === 'true';
   }
   Note.find({ user: req.userAuth._id, ...filter })
+    .lean()
     .sort({ createdAt: -1})
-    .then(notes => res.json({ notes }));
+    .then(notes => {
+      if (req.query.q) {
+        const list = search(req.query.q, notes);
+        res.json({ notes: list });
+      } else {
+        res.json({ notes });
+      }
+    });
 });
 
 router.put('/:id', userAuthenticate, (req, res) => {
