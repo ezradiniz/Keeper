@@ -19,9 +19,10 @@
  ### Next Steps
             
  * Make beautiful UI
- * Add search box
+ * ~~Add search box~~
  * Update shared notes
  * Update activity log
+ * Add pagination
                                                                                                              
  ### License
                                                                                                              
