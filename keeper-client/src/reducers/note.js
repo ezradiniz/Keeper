@@ -35,9 +35,9 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
     case NOTE_CREATED:
       return { ...state, notes: [ action.data, ...state.notes ], loaded: true };
     case NOTES_ARCHIVED_FETCHED:
-      return { ...state, archived: [ ...action.data ], loaded: true };
+      return { ...state, archived: [ ...action.data ], loaded: true, requestArchived: true };
     case NOTES_FETCHED:
-      return { ...state, notes: [ ...action.data ], loaded: true };
+      return { ...state, notes: [ ...action.data ], loaded: true, requestNotes: true };
     case NOTE_ARCHIVED_UPDATED:
       return {
         ...state,

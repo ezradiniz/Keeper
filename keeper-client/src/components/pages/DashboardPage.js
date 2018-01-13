@@ -15,7 +15,7 @@ import { allNotesSelector, notesLoaderSelector } from '../../reducers/note';
 class DashboardPage extends React.Component {
 
   componentDidMount() {
-    if (this.props.notes.length === 0) {
+    if (!this.props.request) {
       this.props.fetchAll().then(() => this.setState({ loaded: true }));
     }
   }
@@ -63,6 +63,7 @@ DashboardPage.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   message: PropTypes.func.isRequired,
   loaded: PropTypes.bool.isRequired,
+  request: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired
@@ -72,7 +73,8 @@ DashboardPage.propTypes = {
 function mapStateToProps(state) {
   return {
     notes: allNotesSelector(state),
-    loaded: notesLoaderSelector(state)
+    loaded: notesLoaderSelector(state),
+    request: !!state.note.requestNotes
   };
 }
 

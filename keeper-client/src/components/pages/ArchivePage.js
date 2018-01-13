@@ -22,7 +22,7 @@ import {
 class ArchivePage extends React.Component {
 
   componentDidMount() {
-    if (this.props.notes.length === 0) {
+    if (!this.props.request) {
       this.props.fetchAllArchive().then(() => this.setState({ loaded: true }));
     }
   }
@@ -81,6 +81,7 @@ ArchivePage.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   loaded: PropTypes.bool.isRequired,
   searching: PropTypes.bool.isRequired,
+  request: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired
@@ -90,7 +91,8 @@ function mapStateToProps(state) {
   return {
     notes: allNotesArchivedSelector(state),
     loaded: notesLoaderSelector(state),
-    searching: notesSearchSelector(state)
+    searching: notesSearchSelector(state),
+    request: !!state.note.requestArchived
   };
 }
 
