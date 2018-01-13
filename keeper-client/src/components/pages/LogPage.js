@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { fetchAll } from '../../actions/log';
+import fetchAll from '../../actions/log';
 import { allLogsSelector, logsLoaderSelector } from '../../reducers/log'
 
 class LogPage extends React.Component {
@@ -32,8 +32,8 @@ class LogPage extends React.Component {
             </Col>
           </Row>
           {
-            logs.map((log, index) =>
-              <Row key={index} className='show-grid'>
+            logs.map(log =>
+              <Row key={log._id} className='show-grid'>
                 <Col xs={8} xsOffset={2}>
                   <Alert  bsStyle='info'>
                     <p className='text-center'>
@@ -51,8 +51,9 @@ class LogPage extends React.Component {
 }
 
 LogPage.propTypes = {
-  logs: PropTypes.array.isRequired,
-  fetchAll : PropTypes.func.isRequired
+  logs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetchAll : PropTypes.func.isRequired,
+  loaded: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {

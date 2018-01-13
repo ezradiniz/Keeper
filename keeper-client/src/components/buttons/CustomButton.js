@@ -16,6 +16,10 @@ const CustomButton = ({ text, onClick, ...rest }) => (
   </Button>
 );
 
+CustomButton.defaultProps = {
+  onClick: function onClick() {}
+};
+
 CustomButton.propTypes = {
   text : PropTypes.string.isRequired,
   onClick: PropTypes.func

@@ -30,7 +30,7 @@ class NoteEditor extends React.Component {
     value: RichTextEditor.createEmptyValue()
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.value) {
       this.setState({ value: this.props.value });
     }
@@ -56,8 +56,13 @@ class NoteEditor extends React.Component {
   }
 }
 
+NoteEditor.defaultProps = {
+  value: undefined
+};
+
 NoteEditor.propTypes = {
-  onChange: PropTypes.func
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.shape({})
 };
 
 export default NoteEditor;

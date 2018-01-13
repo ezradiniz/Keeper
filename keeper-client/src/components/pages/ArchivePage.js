@@ -6,10 +6,13 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Loader from 'react-loader';
 import NoteContainer from '../containers/NoteContainer';
 import NoteModal from '../modals/NoteModal';
-import Loader from 'react-loader';
-import { fetchAllArchive, remove } from '../../actions/note';
+import {
+  fetchAllArchive,
+  remove
+} from '../../actions/note';
 import {
   allNotesArchivedSelector,
   notesLoaderSelector,
@@ -37,7 +40,6 @@ class ArchivePage extends React.Component {
               <NoteContainer
                 location={this.props.location}
                 message={this.props.message}
-                updateOnly
               />
             </Col>
           </Row>
@@ -51,9 +53,9 @@ class ArchivePage extends React.Component {
           }
           <Row className='show-grid'>
             {
-              notes.map((note, index) =>
+              notes.map(note =>
                 <Col
-                  key={index}
+                  key={note._id}
                   md={3}
                   xs={10}
                   className='note-col'
@@ -74,8 +76,14 @@ class ArchivePage extends React.Component {
 
 ArchivePage.propTypes = {
   fetchAllArchive: PropTypes.func.isRequired,
-  notes: PropTypes.array.isRequired,
-  message: PropTypes.func.isRequired
+  remove: PropTypes.func.isRequired,
+  message: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  loaded: PropTypes.bool.isRequired,
+  searching: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {

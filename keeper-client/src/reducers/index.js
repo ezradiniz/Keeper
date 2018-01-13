@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux';
-import { createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { USER_LOGGED_OUT } from '../constantes/types';
 import thunk from 'redux-thunk';
+
+import { USER_LOGGED_OUT } from '../constantes/types';
 
 import user from './user';
 import note from './note';
@@ -23,9 +23,8 @@ const reducers = combineReducers({
 
 const rootReducer = (state, action) => {
   if (action.type === USER_LOGGED_OUT) {
-    state = undefined;
+    return reducers(undefined, action);
   }
-
   return reducers(state, action);
 };
 

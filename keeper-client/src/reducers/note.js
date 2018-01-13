@@ -18,7 +18,7 @@ export const allNotesSelector = state => [ ...state.note.notes ];
 
 export const allNotesArchivedSelector = state => [ ...state.note.archived ];
 
-export const currentNoteSelector = state => { return { ...state.note.current } };
+export const currentNoteSelector = state => Object.assign({}, { ...state.note.current });
 
 export const notesLoaderSelector = state => state.note.loaded;
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import RichTextEditor from 'react-rte';
 import {
   Alert,
   Col,
@@ -8,10 +10,8 @@ import {
   FormGroup,
   Radio,
 } from 'react-bootstrap';
-import CustomButton from '../buttons/CustomButton';
-import PropTypes from 'prop-types';
 import NoteEditor from '../editor/NoteEditor';
-import RichTextEditor from 'react-rte';
+import CustomButton from '../buttons/CustomButton';
 
 class NoteForm extends React.Component {
 
@@ -114,9 +114,24 @@ class NoteForm extends React.Component {
   }
 }
 
+NoteForm.defaultProps = {
+  data: {
+    subject: '',
+    body: RichTextEditor.createEmptyValue(),
+    isPrivate: 'true'
+  }
+};
+
 NoteForm.propTypes = {
   submit: PropTypes.func.isRequired,
-  btnText: PropTypes.string.isRequired
+  btnText: PropTypes.string.isRequired,
+  data: PropTypes.shape({
+    isPrivate: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]).isRequired,
+    body: PropTypes.string.isRequired
+  })
 };
 
 NoteForm.defaultProps = {

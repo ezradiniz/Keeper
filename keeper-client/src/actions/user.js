@@ -16,30 +16,24 @@ export const userLoggedOut = () => ({
   type: USER_LOGGED_OUT
 });
 
-export const fetchCurrent = () => dispatch => {
-  return api.user.fetchCurrent().then(user => {
+export const fetchCurrent = () => dispatch =>
+  api.user.fetchCurrent().then(user => {
     dispatch(userFetched(user));
-    return user;
   });
-};
 
-export const signup = data => dispatch => {
-  return api.user.signup(data).then(user => {
+export const signup = data => dispatch =>
+  api.user.signup(data).then(user => {
     localStorage.keeperJWT = user.token;
     setAuthToken(user.token);
     dispatch(userLoggedIn(user));
-    return user;
   });
-};
 
-export const login = credentials => dispatch => {
-  return api.user.login(credentials).then(user => {
+export const login = credentials => dispatch =>
+  api.user.login(credentials).then(user => {
     localStorage.keeperJWT = user.token;
     setAuthToken(user.token);
     dispatch(userLoggedIn(user));
-    return user;
   });
-};
 
 export const logout = () => dispatch => {
   localStorage.removeItem('keeperJWT');

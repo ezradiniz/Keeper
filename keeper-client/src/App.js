@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import AlertContainer from 'react-alert'
 import setAuthToken from './api/setAuthToken';
 import { fetchCurrent } from './actions/user';
 
@@ -9,10 +11,8 @@ import HomePage from './components/pages/HomePage';
 import TopNavigation from './components/navigations/TopNavigation';
 
 import Routes from './components/routes';
-import { Route } from 'react-router-dom';
 
 import alertOptions from './components/alerts';
-import AlertContainer from 'react-alert'
 
 class App extends React.Component {
 
@@ -20,7 +20,7 @@ class App extends React.Component {
     loaded: false
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (localStorage.keeperJWT) {
       setAuthToken(localStorage.keeperJWT);
       this.props.fetchCurrent().then(() => this.setState({ loaded: true }));
@@ -31,12 +31,16 @@ class App extends React.Component {
 
   onMessageAlert = (text, options) => this.msg.show(text, options);
 
+  refMsg = ref => {
+    this.msg = ref;
+  };
+
   render() {
     const { location } = this.props;
 
     return (
       <div>
-        <AlertContainer ref={a => this.msg = a} {...alertOptions} />
+        <AlertContainer ref={this.refMsg} {...alertOptions} />
         <Route
           location={location}
           path='/'

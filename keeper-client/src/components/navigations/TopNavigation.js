@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Image,
   Nav,
@@ -7,11 +10,8 @@ import {
   Navbar
 } from 'react-bootstrap';
 import SearchForm from '../forms/SearchForm';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { fetchQuery, fetchAll, fetchAllArchive } from '../../actions/note';
-import { logout } from '../../actions/user';
+import { logout  as logoutAction} from '../../actions/user';
 
 class TopNavigation extends React.Component {
 
@@ -86,6 +86,9 @@ class TopNavigation extends React.Component {
 TopNavigation.propTypes = {
   nickname: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
+  fetchQuery: PropTypes.func.isRequired,
+  history: PropTypes.shape({}).isRequired,
+  isAuthenticate: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired
@@ -102,5 +105,5 @@ export default connect(mapStateToProps, {
   fetchAll,
   fetchAllArchive,
   fetchQuery,
-  logout
+  logout: logoutAction
 })(TopNavigation);

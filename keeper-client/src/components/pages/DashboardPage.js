@@ -6,14 +6,11 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
+import { connect } from 'react-redux';
 import NoteModal from '../modals/NoteModal';
 import NoteContainer from '../containers/NoteContainer';
-import { connect } from 'react-redux';
 import { fetchAll } from '../../actions/note';
-import {
-  allNotesSelector,
-  notesLoaderSelector
-} from '../../reducers/note';
+import { allNotesSelector, notesLoaderSelector } from '../../reducers/note';
 
 class DashboardPage extends React.Component {
 
@@ -40,9 +37,9 @@ class DashboardPage extends React.Component {
         <Row className='show-grid'>
           <Loader loaded={loaded}>
             {
-              notes.map((note, index) =>
+              notes.map(note =>
                 <Col
-                  key={index}
+                  key={note._id}
                   md={3}
                   xs={10}
                   className='note-col'
@@ -63,8 +60,12 @@ class DashboardPage extends React.Component {
 
 DashboardPage.propTypes = {
   fetchAll: PropTypes.func.isRequired,
-  notes: PropTypes.array.isRequired,
-  message: PropTypes.func.isRequired
+  notes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  message: PropTypes.func.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
 

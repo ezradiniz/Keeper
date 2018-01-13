@@ -39,8 +39,16 @@ class SearchForm extends React.Component {
   }
 }
 
+SearchForm.defaultProps = {
+  query: ''
+};
+
 SearchForm.propTypes = {
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  query: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
 export default SearchForm;

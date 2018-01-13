@@ -26,7 +26,7 @@ const NoteView = ({ note, toggle }) => (
 );
 
 NoteView.propTypes = {
-  note: PropTypes.object.isRequired,
+  note: PropTypes.shape({}).isRequired,
   toggle: PropTypes.func.isRequired
 };
 

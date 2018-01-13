@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
+import { connect } from 'react-redux';
 import NoteForm from '../forms/NoteForm';
 import CustomButton from '../buttons/CustomButton';
-import { connect } from 'react-redux';
+import { currentNoteSelector } from '../../reducers/note';
 import {
   create,
   update,
   detachCurrent
 } from '../../actions/note';
-import { currentNoteSelector } from '../../reducers/note';
-import onClickOutside from 'react-onclickoutside';
 
 class NoteContainer extends React.Component {
 
@@ -70,12 +70,16 @@ class NoteContainer extends React.Component {
   }
 }
 
+NoteContainer.defaultProps = {
+  updateOnly: false
+};
+
 NoteContainer.propTypes = {
   update: PropTypes.func.isRequired,
   create: PropTypes.func.isRequired,
   message: PropTypes.func.isRequired,
   detachCurrent: PropTypes.func.isRequired,
-  currentNote: PropTypes.object.isRequired,
+  currentNote: PropTypes.shape({}).isRequired,
   updateOnly: PropTypes.bool
 };
 

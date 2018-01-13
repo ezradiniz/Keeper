@@ -6,8 +6,8 @@ import {
   Row
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import api from '../../api';
 import Loader from 'react-loader';
+import api from '../../api';
 import NoteModal from '../modals/NoteModal';
 
 class PublicNote extends React.Component {

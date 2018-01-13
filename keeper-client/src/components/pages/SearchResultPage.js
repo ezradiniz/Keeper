@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Col,
   Grid,
@@ -7,7 +8,6 @@ import {
 } from 'react-bootstrap';
 import NoteContainer from '../containers/NoteContainer';
 import NoteModal from '../modals/NoteModal';
-import { connect } from 'react-redux';
 import { notesQuerySelector } from '../../reducers/note';
 import { detachQuery } from '../../actions/note';
 
@@ -49,9 +49,9 @@ class SearchResultContainer extends React.Component {
         <Row className='show-grid'>
           <h3>Notes</h3>
           {
-            this.state.notes.map((note, index) =>
+            this.state.notes.map(note =>
               <Col
-                key={index}
+                key={note._id}
                 md={3}
                 xs={10}
                 className='note-col'
@@ -67,9 +67,9 @@ class SearchResultContainer extends React.Component {
         <Row className='show-grid'>
           <h3>Archives</h3>
           {
-            this.state.archive.map((note, index) =>
+            this.state.archive.map(note =>
               <Col
-                key={index}
+                key={note._id}
                 md={3}
                 xs={10}
                 className='note-col'
@@ -88,7 +88,12 @@ class SearchResultContainer extends React.Component {
 }
 
 SearchResultContainer.propTypes = {
-  notes: PropTypes.array.isRequired
+  notes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  detachQuery: PropTypes.func.isRequired,
+  message: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {

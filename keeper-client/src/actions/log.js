@@ -6,7 +6,7 @@ const logsFetched = data => ({
   data
 });
 
-export const fetchAll = () => dispatch =>
+export default () => dispatch =>
   api.log.fetchAll().then(data => {
     dispatch(logsFetched(data));
   });

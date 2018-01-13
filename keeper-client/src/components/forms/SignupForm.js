@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Loader from 'react-loader';
 import {
   Alert,
   Col,
@@ -8,8 +10,6 @@ import {
   FormGroup
 } from 'react-bootstrap';
 import CustomButton from '../buttons/CustomButton';
-import PropTypes from 'prop-types';
-import Loader from 'react-loader';
 
 class SignupForm extends React.Component {
 

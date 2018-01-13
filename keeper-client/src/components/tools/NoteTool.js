@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
   Button,
   ButtonToolbar,
@@ -12,10 +15,7 @@ import {
   shareTip,
   updateTip
 } from './NoteTooltips';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { remove, archive, restore, setCurrent } from '../../actions/note';
-import { LinkContainer } from 'react-router-bootstrap';
 import confirm from '../dialogs/index';
 
 const style = {
@@ -28,12 +28,12 @@ class NoteTool extends React.Component {
 
   onRemove = () => {
     confirm('Are you sure to remove this note ?').then(
-      (result) => {
+      () => {
         this.props.removeAction(this.props.note._id).then(() => {
           this.props.message('Note has been removed', { type: 'success' });
         });
       },
-      (result) => {
+      () => {
         this.props.message('Note has not been removed', { type: 'info' });
       }
     );
@@ -90,11 +90,14 @@ class NoteTool extends React.Component {
 }
 
 NoteTool.propTypes = {
-  note: PropTypes.object.isRequired,
+  note: PropTypes.shape({
+    _id: PropTypes.string.isRequired
+  }).isRequired,
   removeAction: PropTypes.func.isRequired,
   archiveAction: PropTypes.func.isRequired,
   restoreAction: PropTypes.func.isRequired,
-  currentAction: PropTypes.func.isRequired
+  currentAction: PropTypes.func.isRequired,
+  message: PropTypes.func.isRequired
 };
 
 export default connect(null, {

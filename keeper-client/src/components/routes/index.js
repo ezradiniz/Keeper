@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 
 import UserRoute from './UserRoute';
 import GuestRoute from './GuestRoute';
@@ -12,26 +13,22 @@ import PublicNote from '../pages/PublicNote';
 import LogPage from '../pages/LogPage';
 import SearchResultPage from '../pages/SearchResultPage';
 
-import { Route } from 'react-router-dom';
-
-const Routes = ({ location, searching, ...rest }) => {
-
-  return (
-    <div>
-      <GuestRoute
-        {...rest}
-        location={location}
-        path='/signup'
-        exact
-        component={SignupPage}
-      />
-      <GuestRoute
-        {...rest}
-        location={location}
-        path='/login'
-        exact
-        component={LoginPage}
-      />
+const Routes = ({ location, ...rest }) => (
+  <div>
+    <GuestRoute
+      {...rest}
+      location={location}
+      path='/signup'
+      exact
+      component={SignupPage}
+    />
+    <GuestRoute
+      {...rest}
+      location={location}
+      path='/login'
+      exact
+      component={LoginPage}
+    />
 
     <UserRoute
       {...rest}
@@ -69,14 +66,12 @@ const Routes = ({ location, searching, ...rest }) => {
       component={SearchResultPage}
     />
   </div>
-  );
-};
+);
 
-Routes.propsType = {
+Routes.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
-  }).isRequired,
-  searching: PropTypes.bool.isRequired
+  }).isRequired
 };
 
 export default Routes;

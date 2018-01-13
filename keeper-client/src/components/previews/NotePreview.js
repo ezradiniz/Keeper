@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { formatText } from '../../util/noteText';
 import renderHTML from 'react-render-html';
 import RichTextEditor from 'react-rte';
+import formatText from '../../util/noteText';
 
 const style = {
   cursor: 'pointer',
@@ -13,7 +13,7 @@ const style = {
 };
 
 const NotePreview = ({ note, toggle }) => (
-  <div style={style} onClick={() => toggle() }>
+  <div role="presentation" style={style} onClick={() => toggle() }>
     <h5 className='text-center'>
       <strong>{formatText(note.subject, 20)}</strong>
     </h5>
@@ -22,7 +22,7 @@ const NotePreview = ({ note, toggle }) => (
 );
 
 NotePreview.propTypes = {
-  note: PropTypes.object.isRequired,
+  note: PropTypes.shape({}).isRequired,
   toggle: PropTypes.func.isRequired
 };
 
