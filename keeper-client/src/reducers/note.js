@@ -58,7 +58,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         notes: [ ...state.notes.filter(n => n._id !== action.data.note._id) ],
-        archived: [ ...state.archived, action.data.note ],
+        archived: [ ...state.archived, action.data.note ].sort(compareDate),
         query: [ ...state.query.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
         loaded: true,
         searching: state.searching
@@ -67,7 +67,7 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
       return {
         ...state,
         archived: [ ...state.archived.filter(n => n._id !== action.data.note._id) ],
-        notes: [ ...state.notes, action.data.note ],
+        notes: [ ...state.notes, action.data.note ].sort(compareDate),
         query: [ ...state.query.map(n => (n._id === action.data.note._id) ? { ...action.data.note } : n )],
         loaded: true,
         searching: state.searching
@@ -105,4 +105,8 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
     default:
       return state;
   }
+}
+
+function compareDate(a, b) {
+  return new Date(b.createdAt) - new Date(a.createdAt);
 }
