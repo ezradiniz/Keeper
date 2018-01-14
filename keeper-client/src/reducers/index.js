@@ -5,11 +5,13 @@ import thunk from 'redux-thunk';
 
 import { USER_LOGGED_OUT } from '../constantes/types';
 
+import noteLog from './middleware';
+
 import user from './user';
 import note from './note';
 import log from './log';
 
-const middleware = [ thunk ];
+const middleware = [ thunk, noteLog ];
 
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger());

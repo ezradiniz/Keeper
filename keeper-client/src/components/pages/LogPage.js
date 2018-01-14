@@ -14,7 +14,7 @@ import { allLogsSelector, logsLoaderSelector } from '../../reducers/log'
 class LogPage extends React.Component {
 
   componentDidMount() {
-    if (this.props.logs.length === 0) {
+    if (!this.props.request) {
       this.props.fetchAll().then(() => this.setState({ loaded: true }));
     }
   }
@@ -53,13 +53,15 @@ class LogPage extends React.Component {
 LogPage.propTypes = {
   logs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchAll : PropTypes.func.isRequired,
-  loaded: PropTypes.bool.isRequired
+  loaded: PropTypes.bool.isRequired,
+  request: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     logs: allLogsSelector(state),
-    loaded: logsLoaderSelector(state)
+    loaded: logsLoaderSelector(state),
+    request: !!state.log.request
   };
 }
 

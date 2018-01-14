@@ -14,6 +14,10 @@ import {
   NOTE_DASHBOARD_UPDATED
 } from '../constantes/types';
 
+function compareDate(a, b) {
+  return new Date(b.createdAt) - new Date(a.createdAt);
+}
+
 export const allNotesSelector = state => [ ...state.note.notes ];
 
 export const allNotesArchivedSelector = state => [ ...state.note.archived ];
@@ -105,8 +109,4 @@ export default function notes(state = { query: [], notes: [], archived: [], curr
     default:
       return state;
   }
-}
-
-function compareDate(a, b) {
-  return new Date(b.createdAt) - new Date(a.createdAt);
 }
