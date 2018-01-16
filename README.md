@@ -23,6 +23,7 @@
  * Update shared notes
  * Update activity log
  * Add pagination
+ * Add Form validation
                                                                                                              
  ### License
                                                                                                              
