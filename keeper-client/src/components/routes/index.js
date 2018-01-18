@@ -9,7 +9,7 @@ import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
 import DashboardPage from '../pages/DashboardPage';
 import ArchivePage from '../pages/ArchivePage';
-import PublicNote from '../pages/PublicNote';
+import PublicNotePage from '../pages/PublicNotePage';
 import LogPage from '../pages/LogPage';
 import SearchResultPage from '../pages/SearchResultPage';
 
@@ -56,7 +56,7 @@ const Routes = ({ location, ...rest }) => (
       location={location}
       path='/notes/public/:note'
       exact
-      component={PublicNote}
+      component={PublicNotePage}
     />
     <UserRoute
       {...rest}

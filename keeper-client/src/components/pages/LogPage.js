@@ -9,21 +9,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import fetchAll from '../../actions/log';
-import { allLogsSelector, logsLoaderSelector } from '../../reducers/log'
+import { allLogsSelector } from '../../reducers/log'
 
 class LogPage extends React.Component {
 
   componentDidMount() {
     if (!this.props.request) {
-      this.props.fetchAll().then(() => this.setState({ loaded: true }));
+      this.props.fetchAll();
     }
   }
 
   render() {
-    const { logs, loaded } = this.props;
+    const { logs, request } = this.props;
 
     return (
-      <Loader loaded={loaded}>
+      <Loader loaded={request}>
         <Grid>
           <Row className='show-grid'>
             <Col className='text-center'>
@@ -32,8 +32,8 @@ class LogPage extends React.Component {
             </Col>
           </Row>
           {
-            logs.map((log, index) =>
-              <Row key={index} className='show-grid'>
+            logs.map(log =>
+              <Row key={log._id} className='show-grid'>
                 <Col xs={8} xsOffset={2}>
                   <Alert  bsStyle='info'>
                     <p className='text-center'>
@@ -50,17 +50,19 @@ class LogPage extends React.Component {
   }
 }
 
+LogPage.defaultProps = {
+  request: false
+};
+
 LogPage.propTypes = {
   logs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchAll : PropTypes.func.isRequired,
-  loaded: PropTypes.bool.isRequired,
   request: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     logs: allLogsSelector(state),
-    loaded: logsLoaderSelector(state),
     request: !!state.log.request
   };
 }

@@ -40,6 +40,7 @@ class ArchivePage extends React.Component {
               <NoteContainer
                 location={this.props.location}
                 message={this.props.message}
+                updateOnly
               />
             </Col>
           </Row>

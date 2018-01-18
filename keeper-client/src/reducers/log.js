@@ -2,14 +2,12 @@ import { LOGS_FETCHED, LOG_CREATED } from '../constantes/types'
 
 export const allLogsSelector = state => [ ...state.log.data ];
 
-export const logsLoaderSelector = state => state.log.loaded;
-
-export default function logs(state = { data: [], loaded: false }, action = {}) {
+export default function logs(state = { data: [] }, action = {}) {
   switch(action.type) {
     case LOGS_FETCHED:
-      return { data: [ ...action.data ], loaded: true, request: true };
+      return { data: [ ...action.data ], request: true };
     case LOG_CREATED:
-      return { data: [ ...state.data, action.data ] };
+      return (state.request) ? { data: [ ...state.data, action.data ] } : state;
     default:
       return state;
   }

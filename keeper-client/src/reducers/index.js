@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 
 import { USER_LOGGED_OUT } from '../constantes/types';
 
-import noteLog from './middleware';
+import noteLog from './middlewares/LogNoteMiddleware';
 
 import user from './user';
 import note from './note';

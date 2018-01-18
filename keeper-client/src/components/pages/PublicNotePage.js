@@ -10,7 +10,7 @@ import Loader from 'react-loader';
 import api from '../../api';
 import NoteModal from '../modals/NoteModal';
 
-class PublicNote extends React.Component {
+class PublicNotePage extends React.Component {
 
   state = {
     loaded: false
@@ -30,9 +30,12 @@ class PublicNote extends React.Component {
         <Grid>
           <Row className='show-grid'>
             {note &&
-                <Col xs={4} xsOffset={4} className='note-col'>
-                  <NoteModal note={note} />
-                </Col>
+                <div>
+                  <Col xs={1} md={1} />
+                  <Col xs={7} md={7} className='note-col'>
+                    <NoteModal note={note} onlyView />
+                  </Col>
+                </div>
             }
           </Row>
           <Row className='show-grid'>
@@ -50,7 +53,7 @@ class PublicNote extends React.Component {
   }
 }
 
-PublicNote.propTypes = {
+PublicNotePage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       note: PropTypes.string.isRequired
@@ -58,4 +61,4 @@ PublicNote.propTypes = {
   }).isRequired
 };
 
-export default PublicNote;
+export default PublicNotePage;

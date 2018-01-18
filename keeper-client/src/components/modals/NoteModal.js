@@ -27,12 +27,12 @@ class NoteModal extends React.Component {
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
-    const { note } = this.props;
+    const { note, onlyView } = this.props;
 
     return (
       <section>
         <NotePreview note={note} toggle={this.toggle} />
-        <NoteTool {...this.props} />
+        {!onlyView && <NoteTool {...this.props} />}
         <Modal
           isOpen={this.state.isOpen}
           style={customStyles}
@@ -45,8 +45,13 @@ class NoteModal extends React.Component {
   }
 }
 
+NoteModal.defaultProps = {
+  onlyView: false
+};
+
 NoteModal.propTypes = {
-  note: PropTypes.shape({}).isRequired
+  note: PropTypes.shape({}).isRequired,
+  onlyView: PropTypes.bool
 };
 
 export default NoteModal;

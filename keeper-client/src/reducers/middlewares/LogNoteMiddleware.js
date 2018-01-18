@@ -7,7 +7,7 @@ import {
   NOTE_RESTORED,
   NOTE_ARCHIVED,
   LOG_CREATED
-} from '../constantes/types';
+} from '../../constantes/types';
 
 export default (store) => next => action => {
   switch(action.type) {
