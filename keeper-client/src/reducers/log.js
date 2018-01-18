@@ -7,7 +7,7 @@ export default function logs(state = { data: [] }, action = {}) {
     case LOGS_FETCHED:
       return { data: [ ...action.data ], request: true };
     case LOG_CREATED:
-      return (state.request) ? { data: [ ...state.data, action.data ] } : state;
+      return { ...state, data: [ action.data, ...state.data ] };
     default:
       return state;
   }

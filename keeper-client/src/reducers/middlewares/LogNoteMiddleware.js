@@ -16,7 +16,7 @@ export default (store) => next => action => {
         type: LOG_CREATED,
         data: {
           type: 'CREATE',
-          message: `Note ${action.data._id} created`,
+          message: `Note ${action.data.note._id} created`,
           user: action.data.user
         }
       });
@@ -27,7 +27,7 @@ export default (store) => next => action => {
         type: LOG_CREATED,
         data: {
           type: 'DELETE',
-          message: `Note ${action.data._id} deleted`,
+          message: `Note ${action.data.note._id} deleted`,
           user: action.data.user
         }
       });
@@ -40,7 +40,7 @@ export default (store) => next => action => {
         type: LOG_CREATED,
         data: {
           type: 'UPDATE',
-          message: `Note ${action.data._id} updated`,
+          message: `Note ${action.data.note._id} updated`,
           user: action.data.user
         }
       });

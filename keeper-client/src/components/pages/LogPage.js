@@ -32,8 +32,8 @@ class LogPage extends React.Component {
             </Col>
           </Row>
           {
-            logs.map(log =>
-              <Row key={log._id} className='show-grid'>
+            logs.map((log, index) =>
+              <Row key={index} className='show-grid'>
                 <Col xs={8} xsOffset={2}>
                   <Alert  bsStyle='info'>
                     <p className='text-center'>
