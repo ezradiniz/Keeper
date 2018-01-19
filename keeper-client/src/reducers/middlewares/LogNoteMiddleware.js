@@ -16,7 +16,7 @@ export default (store) => next => action => {
         type: LOG_CREATED,
         data: {
           type: 'CREATE',
-          message: `Note ${action.data.note._id} created`,
+          message: `Note ${action.data._id} created`,
           user: action.data.user
         }
       });
